@@ -2,7 +2,7 @@ from yt_dlp import YoutubeDL
 import json
 
 # Mets ton vrai ID de chaîne ici
-CHANNEL_ID = "si=xerr4VK0_I5RAk1T"
+CHANNEL_ID = "UCJlbzgymdG0bEYWQrulOI2w"
 
 URL = f"https://www.youtube.com/channel/{CHANNEL_ID}/videos"
 
