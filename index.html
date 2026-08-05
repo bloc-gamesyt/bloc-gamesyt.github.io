@@ -107,6 +107,27 @@ footer a:hover{
     text-decoration:underline;
 }
 </style>
+
+<style>
+fetch("videos.json")
+.then(r=>r.json())
+.then(videos=>{
+
+const zone=document.getElementById("videos");
+
+videos.forEach(id=>{
+
+zone.innerHTML+=`
+<iframe
+src="https://www.youtube.com/embed/${id}"
+allowfullscreen>
+</iframe>`;
+
+});
+
+});
+</style>
+
 </head>
 
 <body>
@@ -127,7 +148,7 @@ src="https://www.youtube.com/embed/videoseries?list=PLGOzf4FZG-JY&si=ANc_wW5qOcI
 allowfullscreen>
 </iframe>
 
-<a class="btn" href="/vidéos">
+<a class="btn" href="/videos">
 Voir toutes les vidéos →
 </a>
 
