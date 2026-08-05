@@ -8,8 +8,6 @@
 
 <link rel="icon" href="/load/logo.png">
 
-<meta name="theme-color" content="#0d6efd">
-
 <style>
 *{
     margin:0;
@@ -27,22 +25,15 @@ header{
     background:#1a1a1a;
     text-align:center;
     padding:30px;
-    box-shadow:0 4px 15px rgba(0,0,0,.4);
 }
 
 header img{
     width:120px;
     border-radius:20px;
-    margin-bottom:10px;
 }
 
 header h1{
-    font-size:42px;
-}
-
-header p{
-    color:#bdbdbd;
-    margin-top:10px;
+    font-size:40px;
 }
 
 .container{
@@ -51,28 +42,33 @@ header p{
     padding:30px 15px;
 }
 
-h2{
-    margin-bottom:20px;
-    color:#4da3ff;
-    text-align:center;
+details{
+    background:#1b1b1b;
+    border-radius:15px;
+    margin-bottom:25px;
+    padding:15px;
 }
 
-#videos{
+summary{
+    cursor:pointer;
+    font-size:25px;
+    color:#4da3ff;
+    font-weight:bold;
+    padding:10px;
+}
+
+#videos,
+#shorts{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
     gap:25px;
+    margin-top:20px;
 }
 
 .video{
-    background:#1b1b1b;
-    border-radius:16px;
+    background:#222;
+    border-radius:15px;
     overflow:hidden;
-    transition:.2s;
-    box-shadow:0 5px 15px rgba(0,0,0,.3);
-}
-
-.video:hover{
-    transform:translateY(-5px);
 }
 
 .video iframe{
@@ -87,29 +83,22 @@ h2{
     font-size:18px;
 }
 
+.loader{
+    text-align:center;
+    color:#aaa;
+    padding:20px;
+}
+
 footer{
     background:#1a1a1a;
-    text-align:center;
     padding:25px;
-    margin-top:40px;
+    text-align:center;
 }
 
 footer a{
     color:#4da3ff;
     text-decoration:none;
-    margin:0 15px;
-    font-size:18px;
-}
-
-footer a:hover{
-    text-decoration:underline;
-}
-
-.loader{
-    text-align:center;
-    font-size:20px;
-    color:#aaa;
-    margin:40px;
+    margin:15px;
 }
 </style>
 
@@ -119,17 +108,23 @@ footer a:hover{
 
 <header>
 
-<img src="/load/logo.png" alt="Bloc-games">
+<img src="/load/logo.png">
 
 <h1>Bloc-games</h1>
 
-<p>Toutes les vidéos de la chaîne YouTube</p>
+<p>Vidéos et shorts de la chaîne</p>
 
 </header>
 
+
 <div class="container">
 
-<h2>📺 Toutes les vidéos</h2>
+
+<details open>
+
+<summary>
+Vidéos
+</summary>
 
 <div id="videos">
 <div class="loader">
@@ -137,7 +132,27 @@ Chargement des vidéos...
 </div>
 </div>
 
+</details>
+
+
+
+<details>
+
+<summary>
+Shorts
+</summary>
+
+<div id="shorts">
+<div class="loader">
+Chargement des shorts...
 </div>
+</div>
+
+</details>
+
+
+</div>
+
 
 <footer>
 
@@ -145,35 +160,30 @@ Chargement des vidéos...
 YouTube
 </a>
 
-|
-
 <a href="https://tiktok.com/@blocgamesyt" target="_blank">
 TikTok
 </a>
 
 </footer>
 
+
+
 <script>
 
-fetch("videos.json")
-.then(response => response.json())
-.then(videos => {
+function chargerFichier(fichier, emplacement){
 
-const zone = document.getElementById("videos");
+fetch(fichier)
 
-zone.innerHTML = "";
+.then(response=>response.json())
 
-videos.forEach(video => {
+.then(data=>{
 
-let vues = video.vues || 0;
+const zone=document.getElementById(emplacement);
 
-if(vues >= 1000000){
-    vues = (vues / 1000000).toFixed(1) + "M";
-}
-else if(vues >= 1000){
-    vues = (vues / 1000).toFixed(1) + "K";
-}
+zone.innerHTML="";
 
+
+data.forEach(video=>{
 
 zone.innerHTML += `
 
@@ -186,27 +196,33 @@ allowfullscreen>
 
 <h3>${video.titre}</h3>
 
-<p>
-👁️ ${vues} vues
-</p>
-
 </div>
 
 `;
 
 });
 
+
 })
-.catch(error => {
 
-console.error(error);
+.catch(()=>{
 
-document.getElementById("videos").innerHTML =
-"Impossible de charger les vidéos.";
+document.getElementById(emplacement).innerHTML =
+"Impossible de charger.";
 
 });
 
+}
+
+
+
+chargerFichier("videos.json","videos");
+
+chargerFichier("shorts.json","shorts");
+
+
 </script>
+
 
 </body>
 </html>
