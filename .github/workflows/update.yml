@@ -27,8 +27,11 @@ jobs:
     - name: Installer yt-dlp
       run: pip install yt-dlp
 
-    - name: Lancer le script
+    - name: Mettre à jour les vidéos
       run: python maj_videos.py
+
+    - name: Mettre à jour les shorts
+      run: python maj_shorts.py
 
     - name: Enregistrer les changements
       run: |
