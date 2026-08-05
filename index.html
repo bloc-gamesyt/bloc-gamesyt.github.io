@@ -8,37 +8,103 @@
 
 <link rel="icon" href="/load/logo.png">
 
+<meta name="theme-color" content="#0d6efd">
+<meta property="og:title" content="Bloc-games">
+<meta property="og:image" content="/load/logo.png">
+
 <style>
-body{
+*{
     margin:0;
-    background:#111;
-    color:white;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
     font-family:Arial,sans-serif;
-    text-align:center;
+    background:#0f0f0f;
+    color:white;
 }
 
 header{
-    background:#1c1c1c;
-    padding:20px;
+    background:#1a1a1a;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.4);
 }
 
 header img{
-    width:120px;
+    width:110px;
+    border-radius:20px;
+    margin-bottom:10px;
+}
+
+header h1{
+    font-size:40px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    padding:30px 0;
+}
+
+.card{
+    background:#1d1d1d;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:30px;
+    box-shadow:0 0 15px rgba(0,0,0,.3);
+}
+
+.card h2{
+    margin-bottom:15px;
+    color:#4da3ff;
 }
 
 iframe{
-    width:90%;
-    max-width:960px;
-    height:540px;
+    width:100%;
+    aspect-ratio:16/9;
     border:none;
-    border-radius:12px;
-    margin:20px auto;
+    border-radius:15px;
 }
 
-a{
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:20px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 22px;
+    background:#4da3ff;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    transition:.2s;
+}
+
+.btn:hover{
+    background:#2d86e6;
+}
+
+footer{
+    text-align:center;
+    padding:35px;
+    background:#1a1a1a;
+}
+
+footer a{
     color:#4da3ff;
     text-decoration:none;
-    margin:0 10px;
+    margin:0 15px;
+    font-size:18px;
+}
+
+footer a:hover{
+    text-decoration:underline;
 }
 </style>
 </head>
@@ -48,31 +114,48 @@ a{
 <header>
 <img src="/load/logo.png" alt="Bloc-games">
 <h1>Bloc-games</h1>
+<p>Retrouve toutes les vidéos et les shorts de la chaîne !</p>
 </header>
 
-<li>
+<div class="container">
+
+<div class="card">
 <h2>Dernière vidéo</h2>
-<a href="/vidéos">Voir plus ➡️</a>
-</li>
 
 <iframe
 src="https://www.youtube.com/embed/videoseries?list=PLGOzf4FZG-JY&si=ANc_wW5qOcIL7lBL"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 allowfullscreen>
 </iframe>
 
+<a class="btn" href="/vidéos">
+Voir toutes les vidéos →
+</a>
+
+</div>
+
+<div class="card">
 <h2>Dernier short</h2>
 
 <iframe
 src="https://www.youtube.com/embed/videoseries?list=PLTPwDW0TzG8Q&si=OgHiQD289KN0jJzB"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 allowfullscreen>
 </iframe>
 
-<p>
-<a href="https://youtube.com/@Bloc-gamesYT" target="_blank">YouTube</a> |
-<a href="https://tiktok.com/@blocgamesyt" target="_blank">TikTok</a>
-</p>
+</div>
+
+</div>
+
+<footer>
+
+<a href="https://youtube.com/@Bloc-gamesYT" target="_blank">
+YouTube
+</a>
+
+<a href="https://tiktok.com/@blocgamesyt" target="_blank">
+TikTok
+</a>
+
+</footer>
 
 </body>
 </html>
