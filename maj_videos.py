@@ -1,48 +1,33 @@
 from yt_dlp import YoutubeDL
 import json
 
-CHANNEL_URL = "https://www.youtube.com/@Bloc-gamesYT/videos"
+# Mets ton vrai ID de chaîne ici
+CHANNEL_ID = "si=xerr4VK0_I5RAk1T"
+
+URL = f"https://www.youtube.com/channel/{CHANNEL_ID}/videos"
 
 options = {
-    "extract_flat": False,
-    "quiet": True,
-    "playlistend": 50,
-    "ignoreerrors": True
+    "extract_flat": True,
+    "quiet": False,
+    "playlistend": 50
 }
 
 with YoutubeDL(options) as ydl:
-    data = ydl.extract_info(CHANNEL_URL, download=False)
+    data = ydl.extract_info(URL, download=False)
+
 
 videos = []
 
 for video in data.get("entries", []):
-
-    if not video:
-        continue
-
-    videos.append({
-        "id": video["id"],
-        "titre": video.get("title", "Sans titre"),
-        "vues": video.get("view_count", 0),
-        "date": video.get("upload_date", "00000000"),
-        "miniature": video.get("thumbnail", "")
-    })
-
-
-# Plus récente en premier
-videos.sort(
-    key=lambda v: v["date"],
-    reverse=True
-)
+    if video:
+        videos.append({
+            "id": video["id"],
+            "titre": video.get("title", "Sans titre")
+        })
 
 
 with open("videos.json", "w", encoding="utf-8") as f:
-    json.dump(
-        videos,
-        f,
-        indent=4,
-        ensure_ascii=False
-    )
+    json.dump(videos, f, indent=4, ensure_ascii=False)
 
 
-print("Mise à jour terminée :", len(videos), "vidéos")
+print("Nombre de vidéos trouvées :", len(videos))
