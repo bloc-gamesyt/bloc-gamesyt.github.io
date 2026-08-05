@@ -1,36 +1,42 @@
 name: Mise à jour des vidéos
 
 on:
+  workflow_dispatch:
+
   schedule:
     - cron: "0 * * * *"
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  update:
+  update-videos:
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+    - name: Télécharger le dépôt
+      uses: actions/checkout@v4
 
-      - run: pip install -r requirements.txt
+    - name: Installer Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
 
-      - run: python maj_videos.py
+    - name: Installer yt-dlp
+      run: pip install yt-dlp
 
-      - name: Commit
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+    - name: Lancer le script
+      run: python maj_videos.py
 
-          git add videos.json
+    - name: Enregistrer les changements
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "actions@github.com"
 
-          git diff --cached --quiet || (
-            git commit -m "Mise à jour automatique des vidéos"
-            git push
-          )
+        git add videos.json
+
+        git commit -m "Mise à jour automatique" || exit 0
+
+        git push
