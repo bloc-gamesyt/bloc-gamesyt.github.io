@@ -8,20 +8,17 @@
 
 <link rel="icon" href="/load/logo.png">
 
-<meta property="og:title" content="Bloc-games">
-<meta property="og:image" content="/load/logo.png">
-
 <style>
 body{
     margin:0;
     background:#111;
     color:white;
     font-family:Arial,sans-serif;
+    text-align:center;
 }
 
 header{
     background:#1c1c1c;
-    text-align:center;
     padding:20px;
 }
 
@@ -29,45 +26,21 @@ header img{
     width:120px;
 }
 
-h2{
-    text-align:center;
-}
-
-#videos{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:20px;
-    padding:20px;
-}
-
-.video{
-    background:#1f1f1f;
+iframe{
+    width:90%;
+    max-width:960px;
+    height:540px;
+    border:none;
     border-radius:12px;
-    overflow:hidden;
+    margin:20px auto;
 }
 
-.video img{
-    width:100%;
-    display:block;
-}
-
-.video h3{
-    padding:10px;
-    margin:0;
-    font-size:17px;
-}
-
-.video a{
-    color:white;
+a{
+    color:#4da3ff;
     text-decoration:none;
-}
-
-footer{
-    text-align:center;
-    padding:20px;
+    margin:0 10px;
 }
 </style>
-
 </head>
 
 <body>
@@ -79,64 +52,16 @@ footer{
 
 <h2>Dernières vidéos</h2>
 
-<div id="videos">
-Chargement...
-</div>
+<iframe
+src="https://www.youtube.com/embed/videoseries?list=PLGOzf4FZG-JY&si=ANc_wW5qOcIL7lBL"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen>
+</iframe>
 
-<footer>
-<a href="https://youtube.com/@Bloc-gamesYT" target="_blank" style="color:white;">
-Chaîne YouTube
-</a>
-</footer>
-
-<script>
-const API_KEY = "AIzaSyBhb3LkbEMoUEKa828RCdX--HnHGPd5Vm0";
-const CHANNEL_ID = "dISkejs9Yu7xJ3Eu"
-
-async function chargerVideos(){
-
-const url =
-`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=12&type=video`;
-
-try{
-
-const reponse = await fetch(url);
-const data = await reponse.json();
-
-const videos = document.getElementById("videos");
-videos.innerHTML = "";
-
-data.items.forEach(video=>{
-
-videos.innerHTML += `
-<div class="video">
-
-<a href="https://www.youtube.com/watch?v=${video.id.videoId}" target="_blank">
-
-<img src="${video.snippet.thumbnails.high.url}">
-
-<h3>${video.snippet.title}</h3>
-
-</a>
-
-</div>
-`;
-
-});
-
-}catch(e){
-
-document.getElementById("videos").innerHTML =
-"Impossible de charger les vidéos.";
-
-console.error(e);
-
-}
-
-}
-
-chargerVideos();
-</script>
+<p>
+<a href="https://youtube.com/@Bloc-gamesYT" target="_blank">YouTube</a> |
+<a href="https://tiktok.com/@blocgamesyt" target="_blank">TikTok</a>
+</p>
 
 </body>
 </html>
