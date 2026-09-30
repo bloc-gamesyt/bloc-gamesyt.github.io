@@ -1,306 +1,58 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Admin — Candidatures Dongeons Faillure</title>
-<link rel="icon" href="/load/logo.png" />
+<meta charset="UTF-8">
+<title>Test Webhook Discord</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#07070a;color:#e6f6ff;font-family:Arial,Helvetica,sans-serif;line-height:1.45;padding:22px}
-  header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
-  header img{width:64px;height:64px;border-radius:10px;object-fit:cover}
-  header h1{font-size:20px;color:#bfe8ff}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-  .login{max-width:520px;margin:12px 0}
-  label{display:block;font-size:13px;color:#bfe8ff;margin-bottom:6px;font-weight:600}
-  input[type="text"],input[type="password"]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#eaf6ff}
-  button{background:#2b9bff;color:#fff;border:0;padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:700}
-  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#bfe8ff}
-  .controls{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
-  .list{margin-top:18px}
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}
-  th{background:rgba(255,255,255,0.01);color:#cfe8ff;font-weight:700}
-  tr:hover td{background:rgba(77,163,255,0.03)}
-  .actions small{display:block;color:#9fbfe6}
-  .empty{padding:18px;color:#9fbfe6}
-  .detail{margin-top:12px;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px}
-  .searchRow{display:flex;gap:8px;align-items:center;margin-top:12px}
-  .searchRow input{flex:1}
-  .danger{background:#ff6b6b}
-  footer{margin-top:18px;text-align:center;color:#9fbfe6;font-size:13px}
-  .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(77,163,255,0.12);color:#7ecbff;font-weight:700;font-size:12px}
+    body {
+        background: #0f172a;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    button {
+        background: #5865F2;
+        border: none;
+        padding: 14px 22px;
+        font-size: 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+    }
+    button:active {
+        transform: scale(0.97);
+    }
 </style>
 </head>
 <body>
-<header>
-  <img src="/load/logo.png" alt="Logo" />
-  <div>
-    <h1>Administration — Candidatures Dongeons Faillure</h1>
-    <div style="color:#9fbfe6;font-size:13px">Accès réservé au staff — consulte les candidatures reçues</div>
-  </div>
-</header>
 
-<section class="card">
-  <!-- CONFIGURATION : renseigne ici l'identifiant et le mot de passe souhaités -->
-  <!-- Exemple : const ADMIN_USER = 'admin'; const ADMIN_PASS = 'monMotDePasse'; -->
-  <div id="loginArea" class="login" aria-live="polite">
-    <label for="user">Identifiant</label>
-    <input id="user" type="text" placeholder="Identifiant" autocomplete="username" />
-    <label for="pass" style="margin-top:10px">Mot de passe</label>
-    <input id="pass" type="password" placeholder="Mot de passe" autocomplete="current-password" />
-    <div class="controls">
-      <button id="loginBtn">Se connecter</button>
-      <button id="clearLocal" class="ghost" title="Supprime toutes les candidatures locales">Supprimer toutes (local)</button>
-    </div>
-    <div id="loginMsg" style="margin-top:10px;color:#ffb3b3"></div>
-  </div>
-
-  <div id="adminArea" style="display:none">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-      <div><span class="badge">Mode admin</span></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button id="exportBtn">Exporter JSON</button>
-        <button id="logoutBtn" class="ghost">Se déconnecter</button>
-      </div>
-    </div>
-
-    <div class="searchRow">
-      <input id="filterInput" type="text" placeholder="Filtrer par nom, Discord, e‑mail ou poste..." />
-      <select id="roleFilter">
-        <option value="">Tous les postes</option>
-        <option value="moderateur">Modérateur</option>
-        <option value="developpeur">Développeur / Scripteur</option>
-        <option value="designer">Designer / Graphiste</option>
-        <option value="animateur">Animateur / Community Manager</option>
-        <option value="mappeur">Mappeur / Level Designer</option>
-        <option value="autre">Autre</option>
-      </select>
-    </div>
-
-    <div id="listWrap" class="list" aria-live="polite">
-      <!-- Tableau des candidatures -->
-      <table id="appsTable" role="table" aria-label="Liste des candidatures">
-        <thead>
-          <tr><th>Nom</th><th>Poste</th><th>Contact</th><th>Âge</th><th>Disponibilités</th><th>Actions</th></tr>
-        </thead>
-        <tbody id="appsBody">
-          <tr><td colspan="6" class="empty">Chargement...</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div id="detailPanel" class="detail" style="display:none"></div>
-  </div>
-</section>
-
-<footer>
-  <a href="apply.html" style="color:#7ecbff;text-decoration:none">Retour au formulaire de candidature</a>
-  <div style="margin-top:8px">Les candidatures sont stockées localement dans ton navigateur (localStorage). Adapte le code pour envoyer vers un serveur si tu veux centraliser.</div>
-</footer>
+<button id="sendBtn">📨 Envoyer un message Discord</button>
 
 <script>
-(function(){
-  // === CONFIGURATION ===
-  // Remplace ces valeurs par ton Identifiant et Mot de passe souhaités
-  const ADMIN_USER = 'PC_B11(Administrator)';      // <-- change ici l'identifiant
-  const ADMIN_PASS = 'mdp1234567890';   // <-- change ici le mot de passe
+// Ton webhook Discord (fixe)
+const WEBHOOK = "https://discord.com/api/webhooks/1554911903300460556/VxGJB_3kg4HlFGW42LunSXVSxZ4Q4XTimUOhnDzw7Iu2PE7-9B_t5qlqNJfxN30rR0Ie";
 
-  // Clé localStorage utilisée pour stocker les candidatures
-  const STORAGE_KEY = 'df_applications';
+// Fonction d'envoi simple
+function sendToDiscord() {
+    const fd = new FormData();
+    fd.append("content", "🔥 **Message de test envoyé depuis la page HTML !**");
 
-  // Références DOM
-  const loginArea = document.getElementById('loginArea');
-  const adminArea = document.getElementById('adminArea');
-  const loginBtn = document.getElementById('loginBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const loginMsg = document.getElementById('loginMsg');
-  const userInput = document.getElementById('user');
-  const passInput = document.getElementById('pass');
-  const appsBody = document.getElementById('appsBody');
-  const detailPanel = document.getElementById('detailPanel');
-  const exportBtn = document.getElementById('exportBtn');
-  const clearLocal = document.getElementById('clearLocal');
-  const filterInput = document.getElementById('filterInput');
-  const roleFilter = document.getElementById('roleFilter');
-
-  // Simple session flag (non sécurisé, côté client)
-  let isAuthenticated = false;
-
-  // Utilitaires
-  function loadApplications(){
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return [];
-      return JSON.parse(raw);
-    } catch(e){
-      console.error('Erreur lecture localStorage', e);
-      return [];
-    }
-  }
-
-  function saveApplications(arr){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr || []));
-  }
-
-  function renderList(){
-    const apps = loadApplications();
-    const q = (filterInput.value || '').toLowerCase().trim();
-    const role = roleFilter.value;
-    const filtered = apps.filter(a => {
-      if (role && a.poste !== role) return false;
-      if (!q) return true;
-      return (a.nom && a.nom.toLowerCase().includes(q)) ||
-             (a.discord && a.discord.toLowerCase().includes(q)) ||
-             (a.email && a.email.toLowerCase().includes(q)) ||
-             (a.poste && a.poste.toLowerCase().includes(q));
+    fetch(WEBHOOK, {
+        method: "POST",
+        body: fd,
+        mode: "no-cors"
     });
 
-    if (!filtered.length){
-      appsBody.innerHTML = '<tr><td colspan="6" class="empty">Aucune candidature trouvée.</td></tr>';
-      return;
-    }
+    alert("Message envoyé ✔️");
+}
 
-    appsBody.innerHTML = '';
-    filtered.forEach((app, idx) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${escapeHtml(app.nom || '')}</td>
-        <td>${escapeHtml(app.poste || '')}</td>
-        <td>${escapeHtml(app.email || '')}<br><small>${escapeHtml(app.discord || '')}</small></td>
-        <td>${escapeHtml(app.age || '')}</td>
-        <td>${escapeHtml(app.disponibilites || '')}</td>
-        <td class="actions">
-          <button data-idx="${idx}" class="viewBtn">Voir</button>
-          <button data-idx="${idx}" class="delBtn ghost" style="margin-left:8px">Supprimer</button>
-        </td>
-      `;
-      appsBody.appendChild(tr);
-    });
-
-    // Attacher événements
-    document.querySelectorAll('.viewBtn').forEach(b => b.addEventListener('click', onView));
-    document.querySelectorAll('.delBtn').forEach(b => b.addEventListener('click', onDelete));
-  }
-
-  function onView(e){
-    const idx = Number(e.currentTarget.dataset.idx);
-    const apps = loadApplications();
-    const app = apps[idx];
-    if (!app) return;
-    detailPanel.style.display = 'block';
-    detailPanel.innerHTML = `
-      <strong>Détails candidature</strong>
-      <div style="margin-top:8px"><strong>Nom :</strong> ${escapeHtml(app.nom || '')}</div>
-      <div><strong>Âge :</strong> ${escapeHtml(app.age || '')}</div>
-      <div><strong>Poste :</strong> ${escapeHtml(app.poste || '')}</div>
-      <div><strong>E‑mail :</strong> ${escapeHtml(app.email || '')}</div>
-      <div><strong>Discord :</strong> ${escapeHtml(app.discord || '')}</div>
-      <div style="margin-top:8px"><strong>Expérience :</strong><div style="margin-top:6px">${nl2br(escapeHtml(app.experience || ''))}</div></div>
-      <div style="margin-top:8px"><strong>Motivation :</strong><div style="margin-top:6px">${nl2br(escapeHtml(app.motivation || ''))}</div></div>
-      <div style="margin-top:8px"><strong>Disponibilités :</strong> ${escapeHtml(app.disponibilites || '')}</div>
-      <div style="margin-top:8px"><strong>Portfolio :</strong> ${app.portfolio ? `<a href="${escapeAttr(app.portfolio)}" target="_blank" rel="noopener">${escapeHtml(app.portfolio)}</a>` : '—'}</div>
-      <div style="margin-top:8px"><strong>Sanctions :</strong><div style="margin-top:6px">${nl2br(escapeHtml(app.sanctions || 'Aucune'))}</div></div>
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button id="closeDetail" class="ghost">Fermer</button>
-        <button id="deleteThis" class="danger">Supprimer cette candidature</button>
-      </div>
-    `;
-    document.getElementById('closeDetail').addEventListener('click', ()=> detailPanel.style.display='none');
-    document.getElementById('deleteThis').addEventListener('click', ()=>{
-      if (!confirm('Supprimer définitivement cette candidature ?')) return;
-      apps.splice(idx,1);
-      saveApplications(apps);
-      renderList();
-      detailPanel.style.display='none';
-    });
-  }
-
-  function onDelete(e){
-    const idx = Number(e.currentTarget.dataset.idx);
-    const apps = loadApplications();
-    if (!apps[idx]) return;
-    if (!confirm('Supprimer définitivement cette candidature ?')) return;
-    apps.splice(idx,1);
-    saveApplications(apps);
-    renderList();
-  }
-
-  function onExport(){
-    const apps = loadApplications();
-    const blob = new Blob([JSON.stringify(apps, null, 2)], {type:'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'candidatures_dongeons_faillure.json';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  }
-
-  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function escapeAttr(s){ return String(s||'').replace(/"/g,'&quot;'); }
-  function nl2br(s){ return s.replace(/\n/g,'<br>'); }
-
-  // === Auth ===
-  loginBtn.addEventListener('click', ()=>{
-    loginMsg.textContent = '';
-    const u = (userInput.value || '').trim();
-    const p = (passInput.value || '').trim();
-    if (!u || !p){ loginMsg.textContent = 'Identifiant et mot de passe requis.'; return; }
-    if (u === ADMIN_USER && p === ADMIN_PASS){
-      isAuthenticated = true;
-      loginArea.style.display = 'none';
-      adminArea.style.display = 'block';
-      renderList();
-    } else {
-      loginMsg.textContent = 'Identifiant ou mot de passe incorrect.';
-    }
-  });
-
-  logoutBtn.addEventListener('click', ()=>{
-    isAuthenticated = false;
-    adminArea.style.display = 'none';
-    loginArea.style.display = 'block';
-    userInput.value = '';
-    passInput.value = '';
-    detailPanel.style.display = 'none';
-  });
-
-  // Exporter
-  exportBtn.addEventListener('click', onExport);
-
-  // Supprimer toutes les candidatures locales (utile pour tests)
-  clearLocal.addEventListener('click', ()=>{
-    if (!confirm('Supprimer toutes les candidatures stockées localement ? Cette action est irréversible.')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    renderList();
-  });
-
-  // Filtres
-  filterInput.addEventListener('input', renderList);
-  roleFilter.addEventListener('change', renderList);
-
-  // Au chargement : si aucune candidature, afficher message utile
-  document.addEventListener('DOMContentLoaded', ()=>{
-    const apps = loadApplications();
-    if (!apps || !apps.length){
-      appsBody.innerHTML = '<tr><td colspan="6" class="empty">Aucune candidature enregistrée. Les candidatures sont attendues depuis la page de candidature (stockage local).</td></tr>';
-    } else {
-      appsBody.innerHTML = '<tr><td colspan="6" class="empty">Connectez‑vous pour voir les candidatures.</td></tr>';
-    }
-  });
-
-  // === NOTE pour intégration avec le formulaire de candidature ===
-  // Le formulaire de candidature (page apply.html) doit enregistrer les candidatures dans localStorage
-  // sous la même clé STORAGE_KEY. Exemple minimal côté formulaire :
-  //
-  // const apps = loadApplications(); apps.push({ nom, age, email, discord, poste, experience, motivation, disponibilites, portfolio, sanctions }); saveApplications(apps);
-  //
-  // Ici on suppose que les objets ont les propriétés : nom, age, email, discord, poste, experience, motivation, disponibilites, portfolio, sanctions
-})();
+// Bouton
+document.getElementById("sendBtn").onclick = sendToDiscord;
 </script>
+
 </body>
 </html>
