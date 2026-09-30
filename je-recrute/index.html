@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Candidature Staff — Dongeons Faillure</title>
+<link rel="icon" href="/load/logo.png" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html,body { height: 100%; }
+  body{
+    background:#0f0f0f;
+    color:#fff;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+  }
+
+  header{
+    background: linear-gradient(90deg,#111827,#0b1220);
+    text-align:center;
+    padding:28px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  header img{ width:96px; height:96px; object-fit:cover; border-radius:14px; display:block; margin:0 auto 12px; }
+  header h1{ font-size:28px; letter-spacing:0.4px; margin-bottom:6px; color:#e6f0ff; }
+  header p{ color:#b8cfe8; opacity:0.9; font-size:14px; }
+
+  .container{
+    width:94%;
+    max-width:980px;
+    margin:28px auto;
+    padding:22px;
+  }
+
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px;
+    padding:20px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  h2{ font-size:20px; color:#dff0ff; margin-bottom:10px; }
+  p.lead{ color:#b9d7ff; margin-bottom:18px; font-size:14px; }
+
+  form .grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:14px;
+  }
+
+  @media (max-width:720px){
+    form .grid{ grid-template-columns: 1fr; }
+  }
+
+  label{
+    display:block;
+    font-size:13px;
+    color:#cfe8ff;
+    margin-bottom:6px;
+    font-weight:600;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  select,
+  textarea,
+  input[type="file"]{
+    width:100%;
+    padding:10px 12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    color:#eaf6ff;
+    font-size:14px;
+    outline:none;
+  }
+
+  textarea{ min-height:120px; resize:vertical; padding-top:12px; }
+
+  .full{ grid-column: 1 / -1; }
+
+  .hint{ font-size:12px; color:#9fbfe6; margin-top:6px; }
+
+  .row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  .checkbox{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    color:#cfe8ff;
+    font-size:14px;
+  }
+
+  .actions{
+    display:flex;
+    gap:12px;
+    justify-content:flex-end;
+    margin-top:18px;
+  }
+
+  button{
+    background: linear-gradient(180deg,#2b9bff,#1f7fe6);
+    color:#fff;
+    border:0;
+    padding:10px 16px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow: 0 6px 18px rgba(31,127,230,0.12);
+  }
+
+  button.secondary{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:#cfe8ff;
+    font-weight:600;
+  }
+
+  .note{
+    font-size:13px;
+    color:#9fbfe6;
+    margin-top:12px;
+  }
+
+  .success{
+    background: linear-gradient(90deg,#052e0f,#073a12);
+    border:1px solid rgba(0,255,120,0.08);
+    color:#bfffcf;
+    padding:12px;
+    border-radius:10px;
+    margin-top:12px;
+  }
+
+  footer{
+    margin-top:28px;
+    text-align:center;
+    padding:18px;
+    color:#9fbfe6;
+    font-size:13px;
+  }
+
+  a.link{
+    color:#7ecbff;
+    text-decoration:none;
+    margin:0 8px;
+  }
+
+  .required{ color:#ffb3b3; margin-left:6px; font-weight:700; }
+
+  /* small helper for file name */
+  .file-info{ font-size:13px; color:#9fbfe6; margin-top:6px; }
+
+  /* focus states */
+  input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 4px rgba(77,163,255,0.08);
+    border-color: rgba(77,163,255,0.9);
+  }
+</style>
+</head>
+<body>
+<header>
+  <img src="/load/logo.png" alt="Logo Dongeons Faillure" />
+  <h1>Dongeons Faillure — Candidature Staff</h1>
+  <p>Remplissez ce formulaire pour postuler au staff du jeu Dongeons Faillure</p>
+</header>
+
+<main class="container">
+  <section class="card" aria-labelledby="form-title">
+    <h2 id="form-title">Formulaire de candidature</h2>
+    <p class="lead">Merci de votre intérêt pour rejoindre l'équipe. Remplissez les champs ci‑dessous avec soin. Les champs marqués d'une étoile sont obligatoires.</p>
+
+    <form id="applicationForm" class="card-form" autocomplete="on" novalidate>
+      <div class="grid">
+        <div>
+          <label for="fullname">Nom complet <span class="required">*</span></label>
+          <input id="fullname" name="fullname" type="text" placeholder="Prénom Nom" required />
+        </div>
+
+        <div>
+          <label for="age">Âge <span class="required">*</span></label>
+          <input id="age" name="age" type="number" min="13" max="120" placeholder="Ex : 18" required />
+          <div class="hint">Vous devez avoir au moins 13 ans pour postuler.</div>
+        </div>
+
+        <div>
+          <label for="email">Adresse e‑mail <span class="required">*</span></label>
+          <input id="email" name="email" type="email" placeholder="exemple@domaine.com" required />
+        </div>
+
+        <div>
+          <label for="discord">Pseudo Discord <span class="required">*</span></label>
+          <input id="discord" name="discord" type="text" placeholder="Pseudo#1234" required />
+        </div>
+
+        <div>
+          <label for="phone">Téléphone (optionnel)</label>
+          <input id="phone" name="phone" type="tel" placeholder="+33 6 12 34 56 78" />
+        </div>
+
+        <div>
+          <label for="role">Poste souhaité <span class="required">*</span></label>
+          <select id="role" name="role" required>
+            <option value="">-- Choisir un poste --</option>
+            <option value="moderateur">Modérateur</option>
+            <option value="developpeur">Développeur / Scripteur</option>
+            <option value="designer">Designer / Graphiste</option>
+            <option value="animateur">Animateur / Community Manager</option>
+            <option value="mappeur">Mappeur / Level Designer</option>
+            <option value="autre">Autre (précisez ci‑dessous)</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label for="experience">Expérience et compétences <span class="required">*</span></label>
+          <textarea id="experience" name="experience" placeholder="Décrivez vos expériences, compétences techniques, projets antérieurs, modération, bots, etc." required></textarea>
+        </div>
+
+        <div class="full">
+          <label for="motivation">Motivation <span class="required">*</span></label>
+          <textarea id="motivation" name="motivation" placeholder="Pourquoi voulez‑vous rejoindre le staff de Dongeons Faillure ? Que pouvez‑vous apporter ?" required></textarea>
+        </div>
+
+        <div>
+          <label for="availability">Disponibilités (jours/heures)</label>
+          <input id="availability" name="availability" type="text" placeholder="Ex : Lun/Mar 18:00-22:00, Week‑end disponible" />
+        </div>
+
+        <div>
+          <label for="portfolio">Liens utiles (portfolio, GitHub, exemples)</label>
+          <input id="portfolio" name="portfolio" type="url" placeholder="https://..." />
+        </div>
+
+        <div class="full">
+          <label for="cv">CV / Pièce jointe (PDF recommandé)</label>
+          <input id="cv" name="cv" type="file" accept=".pdf,.doc,.docx,.txt" />
+          <div class="file-info" id="fileInfo">Aucun fichier sélectionné</div>
+        </div>
+
+        <div class="full">
+          <label for="rules">Avez‑vous déjà été sanctionné sur un serveur ou un jeu ?</label>
+          <select id="rules" name="rules">
+            <option value="">-- Choisir --</option>
+            <option value="non">Non</option>
+            <option value="oui">Oui (expliquez ci‑dessous)</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label for="sanctions">Si oui, expliquez brièvement</label>
+          <textarea id="sanctions" name="sanctions" placeholder="Expliquez la situation, la date et les mesures prises (si applicable)"></textarea>
+        </div>
+
+        <div class="full">
+          <label for="rulesAgree">Règles et confidentialité <span class="required">*</span></label>
+          <div class="checkbox" style="margin-top:8px;">
+            <input id="rulesAgree" name="rulesAgree" type="checkbox" required />
+            <label for="rulesAgree" style="margin:0; font-weight:600; color:#cfe8ff;">J'ai lu et j'accepte que les informations fournies soient utilisées pour l'examen de ma candidature.</label>
+          </div>
+          <div class="hint">Les données sont utilisées uniquement pour le recrutement staff. Ne partagez pas d'informations sensibles (mot de passe, carte bancaire).</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary" id="resetBtn">Réinitialiser</button>
+        <button type="submit" id="submitBtn">Envoyer la candidature</button>
+      </div>
+
+      <div id="response" aria-live="polite"></div>
+    </form>
+
+    <div class="note">
+      <strong>Conseil :</strong> soyez clair et précis. Les candidatures complètes sont traitées plus rapidement.
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <a class="link" href="https://blocplay-beta.github.io" target="_blank" rel="noopener">Site officiel</a>
+      <a class="link" href="https://discord.gg/TcK65JDaaC" target="_blank" rel="noopener">Discord</a>
+    </div>
+    <div style="margin-top:8px;">© Dongeons Faillure — Recrutement staff</div>
+  </footer>
+</main>
+
+<script>
+  (function(){
+    const form = document.getElementById('applicationForm');
+    const response = document.getElementById('response');
+    const fileInput = document.getElementById('cv');
+    const fileInfo = document.getElementById('fileInfo');
+    const resetBtn = document.getElementById('resetBtn');
+
+    fileInput.addEventListener('change', () => {
+      const f = fileInput.files[0];
+      if (!f) {
+        fileInfo.textContent = 'Aucun fichier sélectionné';
+        return;
+      }
+      const maxMB = 8;
+      if (f.size > maxMB * 1024 * 1024) {
+        fileInfo.textContent = 'Fichier trop volumineux (max ' + maxMB + ' MB)';
+        fileInput.value = '';
+        return;
+      }
+      fileInfo.textContent = f.name + ' (' + Math.round(f.size/1024) + ' KB)';
+    });
+
+    resetBtn.addEventListener('click', () => {
+      form.reset();
+      fileInfo.textContent = 'Aucun fichier sélectionné';
+      response.innerHTML = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      response.innerHTML = '';
+
+      // Simple client-side validation for required fields
+      const required = ['fullname','age','email','discord','role','experience','motivation','rulesAgree'];
+      const missing = [];
+      required.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') {
+          if (!el.checked) missing.push(id);
+        } else if (!el.value || el.value.trim() === '') {
+          missing.push(id);
+        }
+      });
+
+      if (missing.length) {
+        response.innerHTML = '<div class="success" style="background:#3b1a1a;border-color:rgba(255,80,80,0.08);color:#ffd6d6;">Veuillez remplir tous les champs obligatoires marqués d\\'une étoile.</div>';
+        document.getElementById(missing[0]).focus();
+        return;
+      }
+
+      // Build a summary (client-side only). In a real deployment, this would be sent to a server.
+      const summary = {
+        nom: document.getElementById('fullname').value.trim(),
+        age: document.getElementById('age').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        discord: document.getElementById('discord').value.trim(),
+        poste: document.getElementById('role').value,
+        disponibilites: document.getElementById('availability').value.trim(),
+        portfolio: document.getElementById('portfolio').value.trim()
+      };
+
+      // Show a friendly confirmation to the user
+      response.innerHTML = '<div class="success">Merci, votre candidature a bien été préparée. Un membre de l\\'équipe vous contactera via Discord ou e‑mail si votre profil correspond aux besoins actuels.<br><br><strong>Récapitulatif :</strong><br>Nom : ' + escapeHtml(summary.nom) + '<br>Poste : ' + escapeHtml(summary.poste) + '<br>Contact : ' + escapeHtml(summary.email) + ' / ' + escapeHtml(summary.discord) + '</div>';
+
+      // Optionally: prepare a downloadable JSON blob for the user (client-side only)
+      // Note: per instructions we won't create files automatically; we only prepare data in memory.
+      // Clear sensitive inputs (file) for privacy
+      fileInput.value = '';
+      fileInfo.textContent = 'Aucun fichier sélectionné';
+
+      // Scroll to response
+      response.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // small helper to escape HTML in summary
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); });
+    }
+  })();
+</script>
+</body>
+</html>
