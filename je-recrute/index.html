@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Dongeons Faillure | Staff</title>
+<title>Candidature Staff — Dongeons Faillure</title>
 <link rel="icon" href="/load/logo.png" />
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
@@ -39,13 +39,14 @@
   .file-preview{margin-top:8px;color:#9fbfe6;font-size:13px}
   .small{font-size:13px;color:#9fbfe6}
   footer{margin-top:18px;text-align:center;color:#9fbfe6;font-size:13px}
+  code{background:rgba(255,255,255,0.02);padding:2px 6px;border-radius:6px;color:#bfe8ff}
 </style>
 </head>
 <body>
 <header>
-  <img src="https://blocplay-beta.github.io/icon.png" alt="Logo BlocPlay" />
+  <img src="/load/logo.png" alt="Logo Dongeons Faillure" />
   <h1>Formulaire de candidature / publicité — Dongeons Faillure</h1>
-  <p>Choisis l'option souhaitée : postuler pour rejoindre le staff ou proposer une publicité pour le jeu.</p>
+  <p>Choisis l'option souhaitée : postuler pour rejoindre le staff ou proposer une publicité pour le jeu. Les données sont enregistrées localement (localStorage) et peuvent être consultées via la page d'administration.</p>
 </header>
 
 <main class="container">
@@ -61,18 +62,18 @@
     <form id="formApp" autocomplete="on" novalidate>
       <div class="grid">
         <div class="full">
-          <label for="discordPseudo">Ton pseudo Discord <span class="small" style="color:#ffdd99">@exemple</span></label>
-          <input id="discordPseudo" name="discordPseudo" type="text" placeholder="@Pseudo#1234" required />
-          <div class="hint">Indique ton pseudo complet Discord (ex : MonPseudo#1234). Ce champ sera utilisé comme nom dans l'administration.</div>
+          <label for="discordPseudo">Ton pseudo Discord</label>
+          <input id="discordPseudo" name="discordPseudo" type="text" placeholder="@exemple#1234" required />
+          <div class="hint">Indique ton pseudo complet Discord (ex : @MonPseudo#1234).</div>
         </div>
 
         <div class="full">
-          <label for="motivation">Pourquoi veux-tu travailler dans ce jeu <span class="small" style="color:#ffdd99">Motivation</span></label>
-          <textarea id="motivation" name="motivation" placeholder="Explique brièvement ta motivation" required></textarea>
+          <label for="motivation">Pourquoi veux-tu travailler dans ce jeu</label>
+          <textarea id="motivation" name="motivation" placeholder="Motivation : explique brièvement pourquoi tu veux rejoindre l'équipe" required></textarea>
         </div>
 
         <div class="full">
-          <label for="roleSelect">Quel rôle veux-tu avoir <span class="small" style="color:#ffdd99">Choisis une option</span></label>
+          <label for="roleSelect">Quel rôle veux-tu avoir</label>
           <select id="roleSelect" name="roleSelect" required>
             <option value="">-- Choisir un rôle --</option>
             <option value="scripteur">Scripteur</option>
@@ -85,12 +86,12 @@
 
         <div id="otherRoleWrap" class="full" style="display:none">
           <label for="otherRole">Autre : préciser</label>
-          <input id="otherRole" name="otherRole" type="text" placeholder="Précise le rôle souhaité" />
+          <input id="otherRole" name="otherRole" type="text" placeholder="Préciser le rôle souhaité" />
         </div>
 
         <div class="full">
-          <label for="availability">Tes horaires de disponibilité <span class="small" style="color:#ffdd99">Précise les horaires et les jours</span></label>
-          <input id="availability" name="availability" type="text" placeholder="Ex : Lun 18:00-22:00, Sam/Dim toute la journée" />
+          <label for="availability">Tes horaires de disponibilité</label>
+          <input id="availability" name="availability" type="text" placeholder="Précise les horaires et les jours, ex : Lun 18:00-22:00, Sam/Dim toute la journée" />
         </div>
 
         <div class="full">
@@ -126,7 +127,7 @@
 
         <div class="full">
           <label for="adLink">Lien de la publicité</label>
-          <input id="adLink" name="adLink" type="url" placeholder="https://..." />
+          <input id="adLink" name="adLink" type="url" placeholder="https://exemple.com/ma-publicite" />
         </div>
 
         <div class="full">
@@ -136,12 +137,12 @@
 
         <div class="full">
           <label for="adContact">Ton pseudo Discord (contact pour la pub)</label>
-          <input id="adContact" name="adContact" type="text" placeholder="@Pseudo#1234" />
+          <input id="adContact" name="adContact" type="text" placeholder="@exemple#1234" />
         </div>
 
         <div class="full">
           <label for="adNotes">Notes supplémentaires (optionnel)</label>
-          <textarea id="adNotes" name="adNotes" placeholder="Informations complémentaires"></textarea>
+          <textarea id="adNotes" name="adNotes" placeholder="Informations complémentaires (optionnel)"></textarea>
         </div>
 
         <div class="full">
@@ -205,7 +206,8 @@
   // File preview for ad image
   const adImage = document.getElementById('adImage');
   const adImageInfo = document.getElementById('adImageInfo');
-  let adImageDataUrl = null;
+  let adImageDataUrl = null; // declared in top-level of IIFE so submit handler can access it
+
   adImage.addEventListener('change', ()=> {
     const f = adImage.files[0];
     if(!f){ adImageInfo.textContent = 'Aucune image sélectionnée'; adImageDataUrl = null; return; }
@@ -234,7 +236,6 @@
   }
 
   // Submit candidature
-  const sendApp = document.getElementById('sendApp');
   const resetApp = document.getElementById('resetApp');
   const appMsg = document.getElementById('appMsg');
 
@@ -269,16 +270,16 @@
 
     // Build object compatible with admin page (include expected fields)
     const appObj = {
-      nom: discordPseudo,                 // admin displays "nom"
-      age: '',                            // not requested by user, left empty
-      email: '',                          // not requested, left empty
+      nom: discordPseudo,
+      age: '',
+      email: '',
       discord: discordPseudo,
       poste: role === 'autre' ? otherRole : role,
-      experience: '',                     // not requested, left empty
+      experience: '',
       motivation: motivation,
       disponibilites: availability,
-      portfolio: '',                      // not requested
-      sanctions: otherInfo || '',         // reuse optional field for extra info
+      portfolio: '',
+      sanctions: otherInfo || '',
       isAd: false,
       createdAt: new Date().toISOString()
     };
@@ -290,6 +291,7 @@
     appMsg.innerHTML = '<div class="success">Merci — ta candidature a été enregistrée localement. Un administrateur pourra la consulter via la page d\'administration.</div>';
     formApp.reset();
     otherRoleWrap.style.display = 'none';
+    adImageDataUrl = adImageDataUrl; // no-op to keep linter quiet
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
@@ -300,7 +302,6 @@
   });
 
   // Submit publicité
-  const sendAd = document.getElementById('sendAd');
   const resetAd = document.getElementById('resetAd');
   const adMsg = document.getElementById('adMsg');
 
@@ -314,6 +315,7 @@
     const adNotes = document.getElementById('adNotes').value.trim();
     const agreeAd = document.getElementById('agreeAd').checked;
 
+    // Validate required fields for ad
     if(!adImageDataUrl){
       adMsg.innerHTML = '<div class="error">Ajoute une image pour la publicité.</div>'; return;
     }
@@ -328,7 +330,7 @@
     }
 
     const adObj = {
-      nom: adContact || adStudio,   // admin will show "nom" — use contact or studio
+      nom: adContact || adStudio,
       age: '',
       email: '',
       discord: adContact || '',
