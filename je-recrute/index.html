@@ -172,7 +172,7 @@
 
 <script>
 // === Webhook Discord fixe ===
-const WEBHOOK = "https://discord.com/api/webhooks/1554898994394824825/B7ho8S8BtOFS9so15xiTfcnp0YH3cQhvIl-eaXflsn1X4vF56-WMh4IbzqF-D_hQ3HA0";
+const WEBHOOK = "https://discord.com/api/webhooks/1554911903300460556/VxGJB_3kg4HlFGW42LunSXVSxZ4Q4XTimUOhnDzw7Iu2PE7-9B_t5qlqNJfxN30rR0Ie";
 
 // === Envoi texte simple ===
 function sendToDiscord(content) {
@@ -203,15 +203,15 @@ function sendImageToDiscord(file, content) {
 document.getElementById("tab-app").onclick = () => {
     formApp.style.display = "";
     formAd.style.display = "none";
-    tab-app.classList.add("active");
-    tab-ad.classList.remove("active");
+    document.getElementById("tab-app").classList.add("active");
+    document.getElementById("tab-ad").classList.remove("active");
 };
 
 document.getElementById("tab-ad").onclick = () => {
     formAd.style.display = "";
     formApp.style.display = "none";
-    tab-ad.classList.add("active");
-    tab-app.classList.remove("active");
+    document.getElementById("tab-ad").classList.add("active");
+    document.getElementById("tab-app").classList.remove("active");
 };
 
 // === Role "Autre" ===
