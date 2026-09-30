@@ -3,68 +3,79 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Candidature Staff — Dongeons Faillure</title>
+<title>Candidature & Publicité — Dongeons Faillure</title>
 <link rel="icon" href="/load/logo.png" />
 <style>
+  :root{
+    --bg:#07080b; --card:#0f1720; --muted:#9fbfe6; --accent:#2b9bff; --glass:rgba(255,255,255,0.03);
+    --radius:12px; --maxw:980px;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
-    background:#0f0f0f;color:#eaf6ff;font-family:Arial,Helvetica,sans-serif;line-height:1.45;padding:18px;
+    background:linear-gradient(180deg,#05060a,var(--bg));
+    color:#eaf6ff;font-family:Inter,system-ui,Arial,sans-serif;padding:28px;display:flex;justify-content:center;
   }
-  header{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:18px}
-  header img{width:84px;height:84px;border-radius:12px;object-fit:cover}
-  header h1{font-size:22px;color:#dff0ff}
-  header p{color:#9fbfe6;font-size:14px;text-align:center;max-width:900px}
-  .container{max-width:980px;margin:0 auto}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-  .tabs{display:flex;gap:8px;margin-bottom:12px}
-  .tab{padding:8px 12px;border-radius:10px;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.04);color:#bfe8ff}
-  .tab.active{background:linear-gradient(180deg,#2b9bff,#1f7fe6);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(31,127,230,0.12)}
-  form{margin-top:8px}
-  label{display:block;font-size:13px;color:#cfe8ff;margin-bottom:6px;font-weight:600}
+  .wrap{width:94%;max-width:var(--maxw)}
+  header{display:flex;gap:18px;align-items:center;margin-bottom:18px}
+  header img{width:84px;height:84px;border-radius:14px;object-fit:cover;border:1px solid var(--glass)}
+  header .title{line-height:1}
+  header h1{font-size:20px;color:#e6f6ff}
+  header p{color:var(--muted);font-size:13px;margin-top:6px}
+
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--radius); padding:18px; border:1px solid var(--glass); box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tab{padding:8px 12px;border-radius:10px;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);font-weight:600}
+  .tab.active{background:linear-gradient(180deg,var(--accent),#1f7fe6);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(43,155,255,0.12)}
+  form{margin-top:6px}
+  label{display:block;font-size:13px;color:#cfe8ff;margin-bottom:6px;font-weight:700}
   input[type="text"], input[type="url"], textarea, select, input[type="file"]{
-    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#eaf6ff;font-size:14px;
+    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#eaf6ff;font-size:14px;
   }
-  textarea{min-height:110px;resize:vertical;padding-top:12px}
+  textarea{min-height:120px;resize:vertical;padding-top:12px}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  @media (max-width:720px){ .grid{grid-template-columns:1fr} .tabs{flex-wrap:wrap} }
+  @media (max-width:760px){ .grid{grid-template-columns:1fr} .tabs{flex-wrap:wrap} }
   .full{grid-column:1/-1}
-  .hint{font-size:13px;color:#9fbfe6;margin-top:6px}
-  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
-  button{background:linear-gradient(180deg,#2b9bff,#1f7fe6);color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
-  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#cfe8ff}
-  .note{font-size:13px;color:#9fbfe6;margin-top:12px}
+  .hint{font-size:13px;color:var(--muted);margin-top:6px}
+  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+  button{background:linear-gradient(180deg,var(--accent),#1f7fe6);color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:800}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfe8ff}
   .success{background:#073a12;border:1px solid rgba(0,255,120,0.08);color:#bfffcf;padding:12px;border-radius:10px;margin-top:12px}
   .error{background:#3b1a1a;border:1px solid rgba(255,80,80,0.08);color:#ffd6d6;padding:12px;border-radius:10px;margin-top:12px}
-  .file-preview{margin-top:8px;color:#9fbfe6;font-size:13px}
-  .small{font-size:13px;color:#9fbfe6}
-  footer{margin-top:18px;text-align:center;color:#9fbfe6;font-size:13px}
+  .file-preview{margin-top:8px;color:var(--muted);font-size:13px}
+  .preview-img{max-width:260px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:block;margin-top:8px}
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
   code{background:rgba(255,255,255,0.02);padding:2px 6px;border-radius:6px;color:#bfe8ff}
 </style>
 </head>
 <body>
-<header>
-  <img src="/load/logo.png" alt="Logo Dongeons Faillure" />
-  <h1>Formulaire de candidature / publicité — Dongeons Faillure</h1>
-  <p>Choisis l'option souhaitée : postuler pour rejoindre le staff ou proposer une publicité pour le jeu. Les données sont enregistrées localement (localStorage) et peuvent être consultées via la page d'administration.</p>
-</header>
+<div class="wrap">
+  <header>
+    <img src="/load/logo.png" alt="Logo Dongeons Faillure">
+    <div class="title">
+      <h1>Dongeons Faillure — Candidature & Publicité</h1>
+      <p>Les soumissions sont envoyées directement sur Discord. Remplace la constante <code>WEBHOOK_URL</code> dans le script par ton webhook Discord.</p>
+    </div>
+  </header>
 
-<main class="container">
-  <section class="card" aria-labelledby="form-title">
-    <h2 id="form-title" style="margin-bottom:8px;color:#dff0ff">Soumettre</h2>
+  <section class="card" aria-labelledby="main-title">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-weight:800;color:#dff0ff">Formulaire officiel</div>
+      <div style="color:var(--muted);font-size:13px">Les administrateurs reçoivent tout sur Discord</div>
+    </div>
 
     <div class="tabs" role="tablist" aria-label="Choix du formulaire">
       <button class="tab active" id="tab-app" role="tab" aria-selected="true">Candidature staff</button>
-      <button class="tab" id="tab-ad" role="tab" aria-selected="false">Publicité</button>
+      <button class="tab" id="tab-ad" role="tab" aria-selected="false">Proposer une publicité</button>
     </div>
 
-    <!-- CANDIDATURE STAFF -->
+    <!-- CANDIDATURE -->
     <form id="formApp" autocomplete="on" novalidate>
       <div class="grid">
         <div class="full">
           <label for="discordPseudo">Ton pseudo Discord</label>
           <input id="discordPseudo" name="discordPseudo" type="text" placeholder="@exemple#1234" required />
-          <div class="hint">Indique ton pseudo complet Discord (ex : @MonPseudo#1234).</div>
+          <div class="hint">Ex : @MonPseudo#1234 — indique ton pseudo complet Discord.</div>
         </div>
 
         <div class="full">
@@ -86,12 +97,12 @@
 
         <div id="otherRoleWrap" class="full" style="display:none">
           <label for="otherRole">Autre : préciser</label>
-          <input id="otherRole" name="otherRole" type="text" placeholder="Préciser le rôle souhaité" />
+          <input id="otherRole" name="otherRole" type="text" placeholder="Précise le rôle souhaité" />
         </div>
 
         <div class="full">
           <label for="availability">Tes horaires de disponibilité</label>
-          <input id="availability" name="availability" type="text" placeholder="Précise les horaires et les jours, ex : Lun 18:00-22:00, Sam/Dim toute la journée" />
+          <input id="availability" name="availability" type="text" placeholder="Ex : Lun 18:00-22:00, Sam/Dim toute la journée" />
         </div>
 
         <div class="full">
@@ -103,7 +114,7 @@
           <label for="agreeApp">Consentement</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input id="agreeApp" name="agreeApp" type="checkbox" />
-            <label for="agreeApp" class="small" style="margin:0;color:#cfe8ff">J'accepte que les informations soient utilisées pour l'examen de ma candidature.</label>
+            <label for="agreeApp" style="margin:0;color:#cfe8ff">J'accepte que les informations soient envoyées sur Discord pour examen.</label>
           </div>
         </div>
       </div>
@@ -149,7 +160,7 @@
           <label for="agreeAd">Consentement</label>
           <div style="display:flex;gap:8px;align-items:center">
             <input id="agreeAd" name="agreeAd" type="checkbox" />
-            <label for="agreeAd" class="small" style="margin:0;color:#cfe8ff">J'accepte que les informations soient utilisées pour l'examen de ma proposition publicitaire.</label>
+            <label for="agreeAd" style="margin:0;color:#cfe8ff">J'accepte que les informations soient envoyées sur Discord pour examen.</label>
           </div>
         </div>
       </div>
@@ -162,28 +173,46 @@
       <div id="adMsg" aria-live="polite"></div>
     </form>
 
-    <div class="note">Les soumissions sont stockées localement dans ton navigateur sous la clé <code>df_applications</code>. Pour centraliser les candidatures, adapte le code pour envoyer les données vers un serveur.</div>
+    <div class="hint" style="margin-top:12px">Si l'envoi vers Discord échoue, la soumission est sauvegardée localement (clé <code>df_applications</code>).</div>
   </section>
 
   <footer>
-    <a href="admin.html" style="color:#7ecbff;text-decoration:none">Page d'administration</a>
-    <div style="margin-top:8px">Assure-toi que la page d'administration utilise le même nom de clé localStorage (<code>df_applications</code>).</div>
+    <div style="color:var(--muted)">Assure-toi de remplacer <code>WEBHOOK_URL</code> dans le script par ton webhook Discord. Si tu veux plus tard centraliser ailleurs, on pourra ajouter un relais serveur.</div>
   </footer>
-</main>
+</div>
 
 <script>
 (function(){
+  // === CONFIGURATION ===
+  // Remplace la valeur ci-dessous par ton webhook Discord.
+  // ATTENTION : si tu mets l'URL ici, elle sera visible dans le code client.
+  // Pour plus de sécurité, utilise un relais serveur.
+  const WEBHOOK_URL = 'REPLACE_WITH_YOUR_DISCORD_WEBHOOK_URL';
+
+  // Optionnel : si tu veux utiliser un relais serveur (plus sûr), définis RELAY_URL
+  // const RELAY_URL = 'https://ton-relais.example.com/submit';
+  const RELAY_URL = null;
+
+  // localStorage key pour fallback
   const STORAGE_KEY = 'df_applications';
 
-  // Tabs
+  // DOM
   const tabApp = document.getElementById('tab-app');
   const tabAd = document.getElementById('tab-ad');
   const formApp = document.getElementById('formApp');
   const formAd = document.getElementById('formAd');
+  const roleSelect = document.getElementById('roleSelect');
+  const otherRoleWrap = document.getElementById('otherRoleWrap');
+  const adImage = document.getElementById('adImage');
+  const adImageInfo = document.getElementById('adImageInfo');
+  const appMsg = document.getElementById('appMsg');
+  const adMsg = document.getElementById('adMsg');
 
-  tabApp.addEventListener('click', ()=>{ setActive('app'); });
-  tabAd.addEventListener('click', ()=>{ setActive('ad'); });
+  let adImageDataUrl = null;
 
+  // Tabs
+  tabApp.addEventListener('click', ()=> setActive('app'));
+  tabAd.addEventListener('click', ()=> setActive('ad'));
   function setActive(mode){
     if(mode === 'app'){
       tabApp.classList.add('active'); tabApp.setAttribute('aria-selected','true');
@@ -196,31 +225,32 @@
     }
   }
 
-  // Role "Autre" handling
-  const roleSelect = document.getElementById('roleSelect');
-  const otherRoleWrap = document.getElementById('otherRoleWrap');
-  roleSelect.addEventListener('change', ()=>{
+  // Role "Autre"
+  roleSelect.addEventListener('change', ()=> {
     otherRoleWrap.style.display = roleSelect.value === 'autre' ? 'block' : 'none';
   });
 
-  // File preview for ad image
-  const adImage = document.getElementById('adImage');
-  const adImageInfo = document.getElementById('adImageInfo');
-  let adImageDataUrl = null; // declared in top-level of IIFE so submit handler can access it
-
-  adImage.addEventListener('change', ()=> {
+  // Image preview for ad
+  adImage.addEventListener('change', async ()=> {
     const f = adImage.files[0];
     if(!f){ adImageInfo.textContent = 'Aucune image sélectionnée'; adImageDataUrl = null; return; }
     if(!f.type.startsWith('image/')){ adImageInfo.textContent = 'Fichier non image'; adImage.value = ''; adImageDataUrl = null; return; }
+    if (f.size > 5 * 1024 * 1024) { // 5MB limit client-side
+      adImageInfo.textContent = 'Image trop volumineuse (max 5 MB)';
+      adImage.value = '';
+      adImageDataUrl = null;
+      return;
+    }
     const reader = new FileReader();
     reader.onload = function(ev){
       adImageDataUrl = ev.target.result;
-      adImageInfo.innerHTML = 'Image sélectionnée : ' + (f.name || 'image') + ' (' + Math.round(f.size/1024) + ' KB') + '<div style="margin-top:8px"><img src="'+adImageDataUrl+'" alt="aperçu" style="max-width:220px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"></div>';
+      adImageInfo.innerHTML = 'Image sélectionnée : ' + (f.name || 'image') + ' (' + Math.round(f.size/1024) + ' KB') +
+        '<img class="preview-img" src="'+adImageDataUrl+'" alt="aperçu">';
     };
     reader.readAsDataURL(f);
   });
 
-  // Helpers for localStorage
+  // Helpers localStorage
   function loadApplications(){
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -235,11 +265,71 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arr || []));
   }
 
-  // Submit candidature
-  const resetApp = document.getElementById('resetApp');
-  const appMsg = document.getElementById('appMsg');
+  // Send to Discord via webhook (text message)
+  async function postToDiscordText(content) {
+    if (RELAY_URL) {
+      // send to relay server which will post to Discord (recommended)
+      const r = await fetch(RELAY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
+      });
+      if (!r.ok) throw new Error('Relay error ' + r.status);
+      return r;
+    }
 
-  formApp.addEventListener('submit', (e)=>{
+    if (!WEBHOOK_URL || WEBHOOK_URL === 'REPLACE_WITH_YOUR_DISCORD_WEBHOOK_URL') {
+      throw new Error('Webhook non configuré');
+    }
+
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error('Discord webhook error: ' + res.status + ' ' + text);
+    }
+    return res;
+  }
+
+  // Send to Discord with file (FormData)
+  async function postToDiscordFile(payload, fileBlob, filename) {
+    if (RELAY_URL) {
+      // send to relay server which will post to Discord (recommended)
+      const form = new FormData();
+      form.append('payload_json', JSON.stringify(payload));
+      if (fileBlob) form.append('file', fileBlob, filename || 'file.png');
+      const r = await fetch(RELAY_URL, { method: 'POST', body: form });
+      if (!r.ok) throw new Error('Relay error ' + r.status);
+      return r;
+    }
+
+    if (!WEBHOOK_URL || WEBHOOK_URL === 'REPLACE_WITH_YOUR_DISCORD_WEBHOOK_URL') {
+      throw new Error('Webhook non configuré');
+    }
+
+    const form = new FormData();
+    form.append('payload_json', JSON.stringify(payload));
+    if (fileBlob) form.append('file', fileBlob, filename || 'image.png');
+
+    const res = await fetch(WEBHOOK_URL, { method: 'POST', body: form });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error('Discord webhook error: ' + res.status + ' ' + text);
+    }
+    return res;
+  }
+
+  // Convert dataURL to Blob
+  async function dataURLToBlob(dataURL) {
+    const res = await fetch(dataURL);
+    return await res.blob();
+  }
+
+  // Form handlers
+  formApp.addEventListener('submit', async (e)=>{
     e.preventDefault();
     appMsg.innerHTML = '';
 
@@ -251,61 +341,76 @@
     const otherInfo = document.getElementById('otherInfo').value.trim();
     const agree = document.getElementById('agreeApp').checked;
 
-    // Basic validation per user's requested required fields
-    if(!discordPseudo){
-      appMsg.innerHTML = '<div class="error">Indique ton pseudo Discord.</div>'; document.getElementById('discordPseudo').focus(); return;
-    }
-    if(!motivation){
-      appMsg.innerHTML = '<div class="error">Explique ta motivation.</div>'; document.getElementById('motivation').focus(); return;
-    }
-    if(!role){
-      appMsg.innerHTML = '<div class="error">Choisis un rôle.</div>'; document.getElementById('roleSelect').focus(); return;
-    }
-    if(role === 'autre' && !otherRole){
-      appMsg.innerHTML = '<div class="error">Précise le rôle souhaité.</div>'; document.getElementById('otherRole').focus(); return;
-    }
-    if(!agree){
-      appMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations pour l\'examen.</div>'; return;
-    }
+    if(!discordPseudo){ appMsg.innerHTML = '<div class="error">Indique ton pseudo Discord.</div>'; document.getElementById('discordPseudo').focus(); return; }
+    if(!motivation){ appMsg.innerHTML = '<div class="error">Explique ta motivation.</div>'; document.getElementById('motivation').focus(); return; }
+    if(!role){ appMsg.innerHTML = '<div class="error">Choisis un rôle.</div>'; document.getElementById('roleSelect').focus(); return; }
+    if(role === 'autre' && !otherRole){ appMsg.innerHTML = '<div class="error">Précise le rôle souhaité.</div>'; document.getElementById('otherRole').focus(); return; }
+    if(!agree){ appMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations.</div>'; return; }
 
-    // Build object compatible with admin page (include expected fields)
-    const appObj = {
-      nom: discordPseudo,
-      age: '',
-      email: '',
-      discord: discordPseudo,
-      poste: role === 'autre' ? otherRole : role,
-      experience: '',
-      motivation: motivation,
-      disponibilites: availability,
-      portfolio: '',
-      sanctions: otherInfo || '',
-      isAd: false,
-      createdAt: new Date().toISOString()
-    };
+    const poste = role === 'autre' ? otherRole : role;
 
-    const apps = loadApplications();
-    apps.push(appObj);
-    saveApplications(apps);
+    // Build Discord message
+    const lines = [
+      '**Nouvelle candidature — Dongeons Faillure**',
+      `**Pseudo Discord:** ${discordPseudo}`,
+      `**Poste souhaité:** ${poste}`,
+      `**Motivation:** ${motivation}`,
+      `**Disponibilités:** ${availability || '—'}`,
+      `**Autres:** ${otherInfo || '—'}`,
+      `**Envoyé le:** ${new Date().toLocaleString()}`
+    ];
+    const content = lines.join('\n');
 
-    appMsg.innerHTML = '<div class="success">Merci — ta candidature a été enregistrée localement. Un administrateur pourra la consulter via la page d\'administration.</div>';
-    formApp.reset();
-    otherRoleWrap.style.display = 'none';
-    adImageDataUrl = adImageDataUrl; // no-op to keep linter quiet
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      await postToDiscordText(content);
+
+      // Save a local copy as fallback/record
+      const appObj = {
+        type: 'candidature',
+        nom: discordPseudo,
+        poste,
+        motivation,
+        disponibilites: availability,
+        autres: otherInfo,
+        createdAt: new Date().toISOString()
+      };
+      const apps = loadApplications();
+      apps.push(appObj);
+      saveApplications(apps);
+
+      appMsg.innerHTML = '<div class="success">Envoyé sur Discord. Merci pour ta candidature.</div>';
+      formApp.reset();
+      otherRoleWrap.style.display = 'none';
+    } catch (err) {
+      console.error(err);
+      // fallback: save locally
+      const appObj = {
+        type: 'candidature',
+        nom: discordPseudo,
+        poste,
+        motivation,
+        disponibilites: availability,
+        autres: otherInfo,
+        createdAt: new Date().toISOString(),
+        error: String(err)
+      };
+      const apps = loadApplications();
+      apps.push(appObj);
+      saveApplications(apps);
+
+      appMsg.innerHTML = '<div class="error">Envoi vers Discord échoué. La candidature a été sauvegardée localement.</div>';
+    }
   });
 
-  resetApp.addEventListener('click', ()=>{
+  // Reset candidature
+  document.getElementById('resetApp').addEventListener('click', ()=>{
     formApp.reset();
     appMsg.innerHTML = '';
     otherRoleWrap.style.display = 'none';
   });
 
   // Submit publicité
-  const resetAd = document.getElementById('resetAd');
-  const adMsg = document.getElementById('adMsg');
-
-  formAd.addEventListener('submit', (e)=>{
+  formAd.addEventListener('submit', async (e)=>{
     e.preventDefault();
     adMsg.innerHTML = '';
 
@@ -315,65 +420,69 @@
     const adNotes = document.getElementById('adNotes').value.trim();
     const agreeAd = document.getElementById('agreeAd').checked;
 
-    // Validate required fields for ad
-    if(!adImageDataUrl){
-      adMsg.innerHTML = '<div class="error">Ajoute une image pour la publicité.</div>'; return;
-    }
-    if(!adLink){
-      adMsg.innerHTML = '<div class="error">Indique le lien de la publicité.</div>'; document.getElementById('adLink').focus(); return;
-    }
-    if(!adStudio){
-      adMsg.innerHTML = '<div class="error">Indique le studio ou l\'entreprise.</div>'; document.getElementById('adStudio').focus(); return;
-    }
-    if(!agreeAd){
-      adMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations pour l\'examen.</div>'; return;
-    }
+    if(!adImageDataUrl){ adMsg.innerHTML = '<div class="error">Ajoute une image pour la publicité.</div>'; return; }
+    if(!adLink){ adMsg.innerHTML = '<div class="error">Indique le lien de la publicité.</div>'; document.getElementById('adLink').focus(); return; }
+    if(!adStudio){ adMsg.innerHTML = '<div class="error">Indique le studio ou l\'entreprise.</div>'; document.getElementById('adStudio').focus(); return; }
+    if(!agreeAd){ adMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations.</div>'; return; }
 
-    const adObj = {
-      nom: adContact || adStudio,
-      age: '',
-      email: '',
-      discord: adContact || '',
-      poste: 'publicite',
-      experience: '',
-      motivation: '',
-      disponibilites: '',
-      portfolio: adLink || '',
-      sanctions: adNotes || '',
-      isAd: true,
-      adImage: adImageDataUrl,
-      adLink: adLink,
-      adStudio: adStudio,
-      createdAt: new Date().toISOString()
+    const payload = {
+      content: `**Nouvelle publicité — Dongeons Faillure**\n**Studio:** ${adStudio}\n**Lien:** ${adLink}\n**Contact:** ${adContact || '—'}\n**Notes:** ${adNotes || '—'}\n**Envoyé le:** ${new Date().toLocaleString()}`
     };
 
-    const apps = loadApplications();
-    apps.push(adObj);
-    saveApplications(apps);
+    try {
+      // Convert dataURL to Blob and send as file attachment
+      const blob = await dataURLToBlob(adImageDataUrl);
+      await postToDiscordFile(payload, blob, 'pub-image.png');
 
-    adMsg.innerHTML = '<div class="success">Merci — ta proposition publicitaire a été enregistrée localement. Un administrateur pourra la consulter via la page d\'administration.</div>';
-    formAd.reset();
-    adImageInfo.textContent = 'Aucune image sélectionnée';
-    adImageDataUrl = null;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Save local copy
+      const adObj = {
+        type: 'publicite',
+        adStudio,
+        adLink,
+        adContact,
+        adNotes,
+        createdAt: new Date().toISOString()
+      };
+      const apps = loadApplications();
+      apps.push(adObj);
+      saveApplications(apps);
+
+      adMsg.innerHTML = '<div class="success">Publicité envoyée sur Discord. Merci.</div>';
+      formAd.reset();
+      adImageInfo.textContent = 'Aucune image sélectionnée';
+      adImageDataUrl = null;
+    } catch (err) {
+      console.error(err);
+      const adObj = {
+        type: 'publicite',
+        adStudio,
+        adLink,
+        adContact,
+        adNotes,
+        createdAt: new Date().toISOString(),
+        error: String(err)
+      };
+      const apps = loadApplications();
+      apps.push(adObj);
+      saveApplications(apps);
+
+      adMsg.innerHTML = '<div class="error">Envoi vers Discord échoué. La proposition a été sauvegardée localement.</div>';
+    }
   });
 
-  resetAd.addEventListener('click', ()=>{
+  // Reset ad
+  document.getElementById('resetAd').addEventListener('click', ()=>{
     formAd.reset();
     adMsg.innerHTML = '';
     adImageInfo.textContent = 'Aucune image sélectionnée';
     adImageDataUrl = null;
   });
 
-  // Initialize
-  setActive('app');
+  // Expose helpers for debugging (optional)
+  window.__df_utils = { loadApplications, saveApplications, STORAGE_KEY };
 
-  // Expose a small helper on window for debugging (optional)
-  window.__df_utils = {
-    loadApplications: loadApplications,
-    saveApplications: saveApplications,
-    STORAGE_KEY: STORAGE_KEY
-  };
+  // initial tab
+  setActive('app');
 })();
 </script>
 </body>
