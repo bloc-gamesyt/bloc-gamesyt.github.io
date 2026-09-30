@@ -1,379 +1,378 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Candidature Staff — Dongeons Faillure</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dongeons Faillure | Staff</title>
 <link rel="icon" href="/load/logo.png" />
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html,body { height: 100%; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
   body{
-    background:#0f0f0f;
-    color:#fff;
-    font-family: Inter, Arial, Helvetica, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    line-height:1.45;
+    background:#0f0f0f;color:#eaf6ff;font-family:Arial,Helvetica,sans-serif;line-height:1.45;padding:18px;
   }
-
-  header{
-    background: linear-gradient(90deg,#111827,#0b1220);
-    text-align:center;
-    padding:28px 18px;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
+  header{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:18px}
+  header img{width:84px;height:84px;border-radius:12px;object-fit:cover}
+  header h1{font-size:22px;color:#dff0ff}
+  header p{color:#9fbfe6;font-size:14px;text-align:center;max-width:900px}
+  .container{max-width:980px;margin:0 auto}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+  .tabs{display:flex;gap:8px;margin-bottom:12px}
+  .tab{padding:8px 12px;border-radius:10px;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.04);color:#bfe8ff}
+  .tab.active{background:linear-gradient(180deg,#2b9bff,#1f7fe6);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(31,127,230,0.12)}
+  form{margin-top:8px}
+  label{display:block;font-size:13px;color:#cfe8ff;margin-bottom:6px;font-weight:600}
+  input[type="text"], input[type="url"], textarea, select, input[type="file"]{
+    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#eaf6ff;font-size:14px;
   }
-  header img{ width:96px; height:96px; object-fit:cover; border-radius:14px; display:block; margin:0 auto 12px; }
-  header h1{ font-size:28px; letter-spacing:0.4px; margin-bottom:6px; color:#e6f0ff; }
-  header p{ color:#b8cfe8; opacity:0.9; font-size:14px; }
-
-  .container{
-    width:94%;
-    max-width:980px;
-    margin:28px auto;
-    padding:22px;
-  }
-
-  .card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:14px;
-    padding:20px;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-    border: 1px solid rgba(255,255,255,0.03);
-  }
-
-  h2{ font-size:20px; color:#dff0ff; margin-bottom:10px; }
-  p.lead{ color:#b9d7ff; margin-bottom:18px; font-size:14px; }
-
-  form .grid{
-    display:grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap:14px;
-  }
-
-  @media (max-width:720px){
-    form .grid{ grid-template-columns: 1fr; }
-  }
-
-  label{
-    display:block;
-    font-size:13px;
-    color:#cfe8ff;
-    margin-bottom:6px;
-    font-weight:600;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="number"],
-  select,
-  textarea,
-  input[type="file"]{
-    width:100%;
-    padding:10px 12px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.06);
-    background: rgba(255,255,255,0.02);
-    color:#eaf6ff;
-    font-size:14px;
-    outline:none;
-  }
-
-  textarea{ min-height:120px; resize:vertical; padding-top:12px; }
-
-  .full{ grid-column: 1 / -1; }
-
-  .hint{ font-size:12px; color:#9fbfe6; margin-top:6px; }
-
-  .row{
-    display:flex;
-    gap:10px;
-    align-items:center;
-  }
-
-  .checkbox{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    color:#cfe8ff;
-    font-size:14px;
-  }
-
-  .actions{
-    display:flex;
-    gap:12px;
-    justify-content:flex-end;
-    margin-top:18px;
-  }
-
-  button{
-    background: linear-gradient(180deg,#2b9bff,#1f7fe6);
-    color:#fff;
-    border:0;
-    padding:10px 16px;
-    border-radius:10px;
-    font-weight:700;
-    cursor:pointer;
-    box-shadow: 0 6px 18px rgba(31,127,230,0.12);
-  }
-
-  button.secondary{
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.06);
-    color:#cfe8ff;
-    font-weight:600;
-  }
-
-  .note{
-    font-size:13px;
-    color:#9fbfe6;
-    margin-top:12px;
-  }
-
-  .success{
-    background: linear-gradient(90deg,#052e0f,#073a12);
-    border:1px solid rgba(0,255,120,0.08);
-    color:#bfffcf;
-    padding:12px;
-    border-radius:10px;
-    margin-top:12px;
-  }
-
-  footer{
-    margin-top:28px;
-    text-align:center;
-    padding:18px;
-    color:#9fbfe6;
-    font-size:13px;
-  }
-
-  a.link{
-    color:#7ecbff;
-    text-decoration:none;
-    margin:0 8px;
-  }
-
-  .required{ color:#ffb3b3; margin-left:6px; font-weight:700; }
-
-  /* small helper for file name */
-  .file-info{ font-size:13px; color:#9fbfe6; margin-top:6px; }
-
-  /* focus states */
-  input:focus, textarea:focus, select:focus {
-    box-shadow: 0 0 0 4px rgba(77,163,255,0.08);
-    border-color: rgba(77,163,255,0.9);
-  }
+  textarea{min-height:110px;resize:vertical;padding-top:12px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:720px){ .grid{grid-template-columns:1fr} .tabs{flex-wrap:wrap} }
+  .full{grid-column:1/-1}
+  .hint{font-size:13px;color:#9fbfe6;margin-top:6px}
+  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+  button{background:linear-gradient(180deg,#2b9bff,#1f7fe6);color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#cfe8ff}
+  .note{font-size:13px;color:#9fbfe6;margin-top:12px}
+  .success{background:#073a12;border:1px solid rgba(0,255,120,0.08);color:#bfffcf;padding:12px;border-radius:10px;margin-top:12px}
+  .error{background:#3b1a1a;border:1px solid rgba(255,80,80,0.08);color:#ffd6d6;padding:12px;border-radius:10px;margin-top:12px}
+  .file-preview{margin-top:8px;color:#9fbfe6;font-size:13px}
+  .small{font-size:13px;color:#9fbfe6}
+  footer{margin-top:18px;text-align:center;color:#9fbfe6;font-size:13px}
 </style>
 </head>
 <body>
 <header>
-  <img src="/load/logo.png" alt="Logo Dongeons Faillure" />
-  <h1>Dongeons Faillure — Candidature Staff</h1>
-  <p>Remplissez ce formulaire pour postuler au staff du jeu Dongeons Faillure</p>
+  <img src="https://blocplay-beta.github.io/icon.png" alt="Logo BlocPlay" />
+  <h1>Formulaire de candidature / publicité — Dongeons Faillure</h1>
+  <p>Choisis l'option souhaitée : postuler pour rejoindre le staff ou proposer une publicité pour le jeu.</p>
 </header>
 
 <main class="container">
   <section class="card" aria-labelledby="form-title">
-    <h2 id="form-title">Formulaire de candidature</h2>
-    <p class="lead">Merci de votre intérêt pour rejoindre l'équipe. Remplissez les champs ci‑dessous avec soin. Les champs marqués d'une étoile sont obligatoires.</p>
+    <h2 id="form-title" style="margin-bottom:8px;color:#dff0ff">Soumettre</h2>
 
-    <form id="applicationForm" class="card-form" autocomplete="on" novalidate>
+    <div class="tabs" role="tablist" aria-label="Choix du formulaire">
+      <button class="tab active" id="tab-app" role="tab" aria-selected="true">Candidature staff</button>
+      <button class="tab" id="tab-ad" role="tab" aria-selected="false">Publicité</button>
+    </div>
+
+    <!-- CANDIDATURE STAFF -->
+    <form id="formApp" autocomplete="on" novalidate>
       <div class="grid">
-        <div>
-          <label for="fullname">Nom complet <span class="required">*</span></label>
-          <input id="fullname" name="fullname" type="text" placeholder="Prénom Nom" required />
+        <div class="full">
+          <label for="discordPseudo">Ton pseudo Discord <span class="small" style="color:#ffdd99">@exemple</span></label>
+          <input id="discordPseudo" name="discordPseudo" type="text" placeholder="@Pseudo#1234" required />
+          <div class="hint">Indique ton pseudo complet Discord (ex : MonPseudo#1234). Ce champ sera utilisé comme nom dans l'administration.</div>
         </div>
 
-        <div>
-          <label for="age">Âge <span class="required">*</span></label>
-          <input id="age" name="age" type="number" min="13" max="120" placeholder="Ex : 18" required />
-          <div class="hint">Vous devez avoir au moins 13 ans pour postuler.</div>
+        <div class="full">
+          <label for="motivation">Pourquoi veux-tu travailler dans ce jeu <span class="small" style="color:#ffdd99">Motivation</span></label>
+          <textarea id="motivation" name="motivation" placeholder="Explique brièvement ta motivation" required></textarea>
         </div>
 
-        <div>
-          <label for="email">Adresse e‑mail <span class="required">*</span></label>
-          <input id="email" name="email" type="email" placeholder="exemple@domaine.com" required />
-        </div>
-
-        <div>
-          <label for="discord">Pseudo Discord <span class="required">*</span></label>
-          <input id="discord" name="discord" type="text" placeholder="Pseudo#1234" required />
-        </div>
-
-        <div>
-          <label for="phone">Téléphone (optionnel)</label>
-          <input id="phone" name="phone" type="tel" placeholder="+33 6 12 34 56 78" />
-        </div>
-
-        <div>
-          <label for="role">Poste souhaité <span class="required">*</span></label>
-          <select id="role" name="role" required>
-            <option value="">-- Choisir un poste --</option>
-            <option value="moderateur">Modérateur</option>
-            <option value="developpeur">Développeur / Scripteur</option>
-            <option value="designer">Designer / Graphiste</option>
-            <option value="animateur">Animateur / Community Manager</option>
-            <option value="mappeur">Mappeur / Level Designer</option>
-            <option value="autre">Autre (précisez ci‑dessous)</option>
+        <div class="full">
+          <label for="roleSelect">Quel rôle veux-tu avoir <span class="small" style="color:#ffdd99">Choisis une option</span></label>
+          <select id="roleSelect" name="roleSelect" required>
+            <option value="">-- Choisir un rôle --</option>
+            <option value="scripteur">Scripteur</option>
+            <option value="animateur">Animateur</option>
+            <option value="sponsors">Sponsors</option>
+            <option value="dessinateur">Dessinateur</option>
+            <option value="autre">Autre</option>
           </select>
         </div>
 
-        <div class="full">
-          <label for="experience">Expérience et compétences <span class="required">*</span></label>
-          <textarea id="experience" name="experience" placeholder="Décrivez vos expériences, compétences techniques, projets antérieurs, modération, bots, etc." required></textarea>
+        <div id="otherRoleWrap" class="full" style="display:none">
+          <label for="otherRole">Autre : préciser</label>
+          <input id="otherRole" name="otherRole" type="text" placeholder="Précise le rôle souhaité" />
         </div>
 
         <div class="full">
-          <label for="motivation">Motivation <span class="required">*</span></label>
-          <textarea id="motivation" name="motivation" placeholder="Pourquoi voulez‑vous rejoindre le staff de Dongeons Faillure ? Que pouvez‑vous apporter ?" required></textarea>
-        </div>
-
-        <div>
-          <label for="availability">Disponibilités (jours/heures)</label>
-          <input id="availability" name="availability" type="text" placeholder="Ex : Lun/Mar 18:00-22:00, Week‑end disponible" />
-        </div>
-
-        <div>
-          <label for="portfolio">Liens utiles (portfolio, GitHub, exemples)</label>
-          <input id="portfolio" name="portfolio" type="url" placeholder="https://..." />
+          <label for="availability">Tes horaires de disponibilité <span class="small" style="color:#ffdd99">Précise les horaires et les jours</span></label>
+          <input id="availability" name="availability" type="text" placeholder="Ex : Lun 18:00-22:00, Sam/Dim toute la journée" />
         </div>
 
         <div class="full">
-          <label for="cv">CV / Pièce jointe (PDF recommandé)</label>
-          <input id="cv" name="cv" type="file" accept=".pdf,.doc,.docx,.txt" />
-          <div class="file-info" id="fileInfo">Aucun fichier sélectionné</div>
+          <label for="otherInfo">Tu veux parler d'autre chose (optionnel)</label>
+          <textarea id="otherInfo" name="otherInfo" placeholder="Informations supplémentaires (optionnel)"></textarea>
         </div>
 
         <div class="full">
-          <label for="rules">Avez‑vous déjà été sanctionné sur un serveur ou un jeu ?</label>
-          <select id="rules" name="rules">
-            <option value="">-- Choisir --</option>
-            <option value="non">Non</option>
-            <option value="oui">Oui (expliquez ci‑dessous)</option>
-          </select>
-        </div>
-
-        <div class="full">
-          <label for="sanctions">Si oui, expliquez brièvement</label>
-          <textarea id="sanctions" name="sanctions" placeholder="Expliquez la situation, la date et les mesures prises (si applicable)"></textarea>
-        </div>
-
-        <div class="full">
-          <label for="rulesAgree">Règles et confidentialité <span class="required">*</span></label>
-          <div class="checkbox" style="margin-top:8px;">
-            <input id="rulesAgree" name="rulesAgree" type="checkbox" required />
-            <label for="rulesAgree" style="margin:0; font-weight:600; color:#cfe8ff;">J'ai lu et j'accepte que les informations fournies soient utilisées pour l'examen de ma candidature.</label>
+          <label for="agreeApp">Consentement</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="agreeApp" name="agreeApp" type="checkbox" />
+            <label for="agreeApp" class="small" style="margin:0;color:#cfe8ff">J'accepte que les informations soient utilisées pour l'examen de ma candidature.</label>
           </div>
-          <div class="hint">Les données sont utilisées uniquement pour le recrutement staff. Ne partagez pas d'informations sensibles (mot de passe, carte bancaire).</div>
         </div>
       </div>
 
       <div class="actions">
-        <button type="button" class="secondary" id="resetBtn">Réinitialiser</button>
-        <button type="submit" id="submitBtn">Envoyer la candidature</button>
+        <button type="submit" id="sendApp">Envoyer</button>
+        <button type="button" id="resetApp" class="ghost">Réinitialiser</button>
       </div>
 
-      <div id="response" aria-live="polite"></div>
+      <div id="appMsg" aria-live="polite"></div>
     </form>
 
-    <div class="note">
-      <strong>Conseil :</strong> soyez clair et précis. Les candidatures complètes sont traitées plus rapidement.
-    </div>
+    <!-- PUBLICITÉ -->
+    <form id="formAd" style="display:none;margin-top:12px" enctype="multipart/form-data" novalidate>
+      <div class="grid">
+        <div class="full">
+          <label for="adImage">Image de la publicité</label>
+          <input id="adImage" name="adImage" type="file" accept="image/*" />
+          <div id="adImageInfo" class="file-preview">Aucune image sélectionnée</div>
+        </div>
+
+        <div class="full">
+          <label for="adLink">Lien de la publicité</label>
+          <input id="adLink" name="adLink" type="url" placeholder="https://..." />
+        </div>
+
+        <div class="full">
+          <label for="adStudio">Studio / Entreprise de la publicité</label>
+          <input id="adStudio" name="adStudio" type="text" placeholder="Nom du studio ou de l'entreprise" />
+        </div>
+
+        <div class="full">
+          <label for="adContact">Ton pseudo Discord (contact pour la pub)</label>
+          <input id="adContact" name="adContact" type="text" placeholder="@Pseudo#1234" />
+        </div>
+
+        <div class="full">
+          <label for="adNotes">Notes supplémentaires (optionnel)</label>
+          <textarea id="adNotes" name="adNotes" placeholder="Informations complémentaires"></textarea>
+        </div>
+
+        <div class="full">
+          <label for="agreeAd">Consentement</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="agreeAd" name="agreeAd" type="checkbox" />
+            <label for="agreeAd" class="small" style="margin:0;color:#cfe8ff">J'accepte que les informations soient utilisées pour l'examen de ma proposition publicitaire.</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="sendAd">Envoyer</button>
+        <button type="button" id="resetAd" class="ghost">Réinitialiser</button>
+      </div>
+
+      <div id="adMsg" aria-live="polite"></div>
+    </form>
+
+    <div class="note">Les soumissions sont stockées localement dans ton navigateur sous la clé <code>df_applications</code>. Pour centraliser les candidatures, adapte le code pour envoyer les données vers un serveur.</div>
   </section>
 
   <footer>
-    <div>
-      <a class="link" href="https://blocplay-beta.github.io" target="_blank" rel="noopener">Site officiel</a>
-      <a class="link" href="https://discord.gg/TcK65JDaaC" target="_blank" rel="noopener">Discord</a>
-    </div>
-    <div style="margin-top:8px;">© Dongeons Faillure — Recrutement staff</div>
+    <a href="admin.html" style="color:#7ecbff;text-decoration:none">Page d'administration</a>
+    <div style="margin-top:8px">Assure-toi que la page d'administration utilise le même nom de clé localStorage (<code>df_applications</code>).</div>
   </footer>
 </main>
 
 <script>
-  (function(){
-    const form = document.getElementById('applicationForm');
-    const response = document.getElementById('response');
-    const fileInput = document.getElementById('cv');
-    const fileInfo = document.getElementById('fileInfo');
-    const resetBtn = document.getElementById('resetBtn');
+(function(){
+  const STORAGE_KEY = 'df_applications';
 
-    fileInput.addEventListener('change', () => {
-      const f = fileInput.files[0];
-      if (!f) {
-        fileInfo.textContent = 'Aucun fichier sélectionné';
-        return;
-      }
-      const maxMB = 8;
-      if (f.size > maxMB * 1024 * 1024) {
-        fileInfo.textContent = 'Fichier trop volumineux (max ' + maxMB + ' MB)';
-        fileInput.value = '';
-        return;
-      }
-      fileInfo.textContent = f.name + ' (' + Math.round(f.size/1024) + ' KB)';
-    });
+  // Tabs
+  const tabApp = document.getElementById('tab-app');
+  const tabAd = document.getElementById('tab-ad');
+  const formApp = document.getElementById('formApp');
+  const formAd = document.getElementById('formAd');
 
-    resetBtn.addEventListener('click', () => {
-      form.reset();
-      fileInfo.textContent = 'Aucun fichier sélectionné';
-      response.innerHTML = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+  tabApp.addEventListener('click', ()=>{ setActive('app'); });
+  tabAd.addEventListener('click', ()=>{ setActive('ad'); });
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      response.innerHTML = '';
-
-      // Simple client-side validation for required fields
-      const required = ['fullname','age','email','discord','role','experience','motivation','rulesAgree'];
-      const missing = [];
-      required.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (el.type === 'checkbox') {
-          if (!el.checked) missing.push(id);
-        } else if (!el.value || el.value.trim() === '') {
-          missing.push(id);
-        }
-      });
-
-      if (missing.length) {
-        response.innerHTML = '<div class="success" style="background:#3b1a1a;border-color:rgba(255,80,80,0.08);color:#ffd6d6;">Veuillez remplir tous les champs obligatoires marqués d\\'une étoile.</div>';
-        document.getElementById(missing[0]).focus();
-        return;
-      }
-
-      // Build a summary (client-side only). In a real deployment, this would be sent to a server.
-      const summary = {
-        nom: document.getElementById('fullname').value.trim(),
-        age: document.getElementById('age').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        discord: document.getElementById('discord').value.trim(),
-        poste: document.getElementById('role').value,
-        disponibilites: document.getElementById('availability').value.trim(),
-        portfolio: document.getElementById('portfolio').value.trim()
-      };
-
-      // Show a friendly confirmation to the user
-      response.innerHTML = '<div class="success">Merci, votre candidature a bien été préparée. Un membre de l\\'équipe vous contactera via Discord ou e‑mail si votre profil correspond aux besoins actuels.<br><br><strong>Récapitulatif :</strong><br>Nom : ' + escapeHtml(summary.nom) + '<br>Poste : ' + escapeHtml(summary.poste) + '<br>Contact : ' + escapeHtml(summary.email) + ' / ' + escapeHtml(summary.discord) + '</div>';
-
-      // Optionally: prepare a downloadable JSON blob for the user (client-side only)
-      // Note: per instructions we won't create files automatically; we only prepare data in memory.
-      // Clear sensitive inputs (file) for privacy
-      fileInput.value = '';
-      fileInfo.textContent = 'Aucun fichier sélectionné';
-
-      // Scroll to response
-      response.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-
-    // small helper to escape HTML in summary
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); });
+  function setActive(mode){
+    if(mode === 'app'){
+      tabApp.classList.add('active'); tabApp.setAttribute('aria-selected','true');
+      tabAd.classList.remove('active'); tabAd.setAttribute('aria-selected','false');
+      formApp.style.display = ''; formAd.style.display = 'none';
+    } else {
+      tabAd.classList.add('active'); tabAd.setAttribute('aria-selected','true');
+      tabApp.classList.remove('active'); tabApp.setAttribute('aria-selected','false');
+      formAd.style.display = ''; formApp.style.display = 'none';
     }
-  })();
+  }
+
+  // Role "Autre" handling
+  const roleSelect = document.getElementById('roleSelect');
+  const otherRoleWrap = document.getElementById('otherRoleWrap');
+  roleSelect.addEventListener('change', ()=>{
+    otherRoleWrap.style.display = roleSelect.value === 'autre' ? 'block' : 'none';
+  });
+
+  // File preview for ad image
+  const adImage = document.getElementById('adImage');
+  const adImageInfo = document.getElementById('adImageInfo');
+  let adImageDataUrl = null;
+  adImage.addEventListener('change', ()=> {
+    const f = adImage.files[0];
+    if(!f){ adImageInfo.textContent = 'Aucune image sélectionnée'; adImageDataUrl = null; return; }
+    if(!f.type.startsWith('image/')){ adImageInfo.textContent = 'Fichier non image'; adImage.value = ''; adImageDataUrl = null; return; }
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      adImageDataUrl = ev.target.result;
+      adImageInfo.innerHTML = 'Image sélectionnée : ' + (f.name || 'image') + ' (' + Math.round(f.size/1024) + ' KB') + '<div style="margin-top:8px"><img src="'+adImageDataUrl+'" alt="aperçu" style="max-width:220px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"></div>';
+    };
+    reader.readAsDataURL(f);
+  });
+
+  // Helpers for localStorage
+  function loadApplications(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return [];
+      return JSON.parse(raw);
+    } catch(e){
+      console.error('Erreur lecture localStorage', e);
+      return [];
+    }
+  }
+  function saveApplications(arr){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr || []));
+  }
+
+  // Submit candidature
+  const sendApp = document.getElementById('sendApp');
+  const resetApp = document.getElementById('resetApp');
+  const appMsg = document.getElementById('appMsg');
+
+  formApp.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    appMsg.innerHTML = '';
+
+    const discordPseudo = document.getElementById('discordPseudo').value.trim();
+    const motivation = document.getElementById('motivation').value.trim();
+    const role = document.getElementById('roleSelect').value;
+    const otherRole = document.getElementById('otherRole').value.trim();
+    const availability = document.getElementById('availability').value.trim();
+    const otherInfo = document.getElementById('otherInfo').value.trim();
+    const agree = document.getElementById('agreeApp').checked;
+
+    // Basic validation per user's requested required fields
+    if(!discordPseudo){
+      appMsg.innerHTML = '<div class="error">Indique ton pseudo Discord.</div>'; document.getElementById('discordPseudo').focus(); return;
+    }
+    if(!motivation){
+      appMsg.innerHTML = '<div class="error">Explique ta motivation.</div>'; document.getElementById('motivation').focus(); return;
+    }
+    if(!role){
+      appMsg.innerHTML = '<div class="error">Choisis un rôle.</div>'; document.getElementById('roleSelect').focus(); return;
+    }
+    if(role === 'autre' && !otherRole){
+      appMsg.innerHTML = '<div class="error">Précise le rôle souhaité.</div>'; document.getElementById('otherRole').focus(); return;
+    }
+    if(!agree){
+      appMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations pour l\'examen.</div>'; return;
+    }
+
+    // Build object compatible with admin page (include expected fields)
+    const appObj = {
+      nom: discordPseudo,                 // admin displays "nom"
+      age: '',                            // not requested by user, left empty
+      email: '',                          // not requested, left empty
+      discord: discordPseudo,
+      poste: role === 'autre' ? otherRole : role,
+      experience: '',                     // not requested, left empty
+      motivation: motivation,
+      disponibilites: availability,
+      portfolio: '',                      // not requested
+      sanctions: otherInfo || '',         // reuse optional field for extra info
+      isAd: false,
+      createdAt: new Date().toISOString()
+    };
+
+    const apps = loadApplications();
+    apps.push(appObj);
+    saveApplications(apps);
+
+    appMsg.innerHTML = '<div class="success">Merci — ta candidature a été enregistrée localement. Un administrateur pourra la consulter via la page d\'administration.</div>';
+    formApp.reset();
+    otherRoleWrap.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  resetApp.addEventListener('click', ()=>{
+    formApp.reset();
+    appMsg.innerHTML = '';
+    otherRoleWrap.style.display = 'none';
+  });
+
+  // Submit publicité
+  const sendAd = document.getElementById('sendAd');
+  const resetAd = document.getElementById('resetAd');
+  const adMsg = document.getElementById('adMsg');
+
+  formAd.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    adMsg.innerHTML = '';
+
+    const adLink = document.getElementById('adLink').value.trim();
+    const adStudio = document.getElementById('adStudio').value.trim();
+    const adContact = document.getElementById('adContact').value.trim();
+    const adNotes = document.getElementById('adNotes').value.trim();
+    const agreeAd = document.getElementById('agreeAd').checked;
+
+    if(!adImageDataUrl){
+      adMsg.innerHTML = '<div class="error">Ajoute une image pour la publicité.</div>'; return;
+    }
+    if(!adLink){
+      adMsg.innerHTML = '<div class="error">Indique le lien de la publicité.</div>'; document.getElementById('adLink').focus(); return;
+    }
+    if(!adStudio){
+      adMsg.innerHTML = '<div class="error">Indique le studio ou l\'entreprise.</div>'; document.getElementById('adStudio').focus(); return;
+    }
+    if(!agreeAd){
+      adMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations pour l\'examen.</div>'; return;
+    }
+
+    const adObj = {
+      nom: adContact || adStudio,   // admin will show "nom" — use contact or studio
+      age: '',
+      email: '',
+      discord: adContact || '',
+      poste: 'publicite',
+      experience: '',
+      motivation: '',
+      disponibilites: '',
+      portfolio: adLink || '',
+      sanctions: adNotes || '',
+      isAd: true,
+      adImage: adImageDataUrl,
+      adLink: adLink,
+      adStudio: adStudio,
+      createdAt: new Date().toISOString()
+    };
+
+    const apps = loadApplications();
+    apps.push(adObj);
+    saveApplications(apps);
+
+    adMsg.innerHTML = '<div class="success">Merci — ta proposition publicitaire a été enregistrée localement. Un administrateur pourra la consulter via la page d\'administration.</div>';
+    formAd.reset();
+    adImageInfo.textContent = 'Aucune image sélectionnée';
+    adImageDataUrl = null;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  resetAd.addEventListener('click', ()=>{
+    formAd.reset();
+    adMsg.innerHTML = '';
+    adImageInfo.textContent = 'Aucune image sélectionnée';
+    adImageDataUrl = null;
+  });
+
+  // Initialize
+  setActive('app');
+
+  // Expose a small helper on window for debugging (optional)
+  window.__df_utils = {
+    loadApplications: loadApplications,
+    saveApplications: saveApplications,
+    STORAGE_KEY: STORAGE_KEY
+  };
+})();
 </script>
 </body>
 </html>
