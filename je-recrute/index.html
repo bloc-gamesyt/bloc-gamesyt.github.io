@@ -58,7 +58,7 @@
     <img src="/load/logo.png" alt="Logo Dongeons Faillure">
     <div class="title">
       <h1>Dongeons Faillure — Candidature & Publicité</h1>
-      <p>Les soumissions sont envoyées sur Discord. Colle ton webhook ci‑dessous (ou utilise un relais sécurisé si tu préfères).</p>
+      <p>Les soumissions sont envoyées sur Discord. L'URL du webhook est pré-remplie pour toi.</p>
     </div>
   </header>
 
@@ -69,9 +69,9 @@
     </div>
 
     <div style="margin-bottom:12px">
-      <label for="webhook">Webhook Discord (colle ici)</label>
-      <input id="webhook" class="webhook-input" type="text" placeholder="https://discord.com/api/webhooks/..." />
-      <div class="danger-note">Ne partage pas cette URL publiquement. Si tu l'as déjà exposée, recrée le webhook dans Discord.</div>
+      <label for="webhook">Webhook Discord (colle ici ou laisse la valeur)</label>
+      <input id="webhook" class="webhook-input" type="text" />
+      <div class="danger-note">L'URL du webhook est sensible. Si elle a été exposée, recrée le webhook dans Discord.</div>
     </div>
 
     <div class="tabs" role="tablist" aria-label="Choix du formulaire">
@@ -187,12 +187,16 @@
   </section>
 
   <footer>
-    <div class="small">Si tu veux plus tard sécuriser le webhook, je peux t'aider à ajouter un relais serveur. Pour l'instant colle ton webhook ci‑dessous et teste.</div>
+    <div class="small">Si tu veux plus tard sécuriser le webhook, je peux t'aider à ajouter un relais serveur. Pour l'instant la page envoie directement sur Discord.</div>
   </footer>
 </div>
 
 <script>
 (function(){
+  // === WEBHOOK PRÉ-REMPLI (tel que demandé) ===
+  // Tu as demandé d'inclure cette URL dans le code.
+  const PRESET_WEBHOOK = 'https://discord.com/api/webhooks/1554898994394824825/B7ho8S8BtOFS9so15xiTfcnp0YH3cQhvIl-eaXflsn1X4vF56-WMh4IbzqF-D_hQ3HA0';
+
   // localStorage key pour fallback
   const STORAGE_KEY = 'df_applications';
 
@@ -210,6 +214,9 @@
   const adMsg = document.getElementById('adMsg');
 
   let adImageDataUrl = null;
+
+  // Prefill webhook input with the provided URL
+  webhookInput.value = PRESET_WEBHOOK;
 
   // Tabs
   tabApp.addEventListener('click', ()=> setActive('app'));
@@ -276,7 +283,6 @@
         body: JSON.stringify(json)
       });
       if (!res.ok) {
-        // If server responded with error, throw to fallback
         const text = await res.text().catch(()=>res.statusText);
         throw new Error('HTTP ' + res.status + ' ' + text);
       }
