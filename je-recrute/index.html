@@ -1,489 +1,119 @@
-<!DOCTYPE html>
+<!-- Page minimale : envoie candidature / pub directement au webhook Discord (mode: no-cors) -->
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Candidature & Publicité — Dongeons Faillure</title>
-<link rel="icon" href="/load/logo.png" />
-<style>
-  :root{
-    --bg:#07080b; --card:#0f1720; --muted:#9fbfe6; --accent:#2b9bff; --glass:rgba(255,255,255,0.03);
-    --radius:12px; --maxw:980px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    background:linear-gradient(180deg,#05060a,var(--bg));
-    color:#eaf6ff;font-family:Inter,system-ui,Arial,sans-serif;padding:28px;display:flex;justify-content:center;
-  }
-  .wrap{width:94%;max-width:var(--maxw)}
-  header{display:flex;gap:18px;align-items:center;margin-bottom:18px}
-  header img{width:84px;height:84px;border-radius:14px;object-fit:cover;border:1px solid var(--glass)}
-  header .title{line-height:1}
-  header h1{font-size:20px;color:#e6f6ff}
-  header p{color:var(--muted);font-size:13px;margin-top:6px}
-
-  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--radius); padding:18px; border:1px solid var(--glass); box-shadow:0 8px 30px rgba(2,6,23,0.6)}
-  .tabs{display:flex;gap:8px;margin-bottom:14px}
-  .tab{padding:8px 12px;border-radius:10px;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);font-weight:600}
-  .tab.active{background:linear-gradient(180deg,var(--accent),#1f7fe6);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(43,155,255,0.12)}
-  form{margin-top:6px}
-  label{display:block;font-size:13px;color:#cfe8ff;margin-bottom:6px;font-weight:700}
-  input[type="text"], input[type="url"], textarea, select, input[type="file"]{
-    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#eaf6ff;font-size:14px;
-  }
-  textarea{min-height:120px;resize:vertical;padding-top:12px}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  @media (max-width:760px){ .grid{grid-template-columns:1fr} .tabs{flex-wrap:wrap} }
-  .full{grid-column:1/-1}
-  .hint{font-size:13px;color:var(--muted);margin-top:6px}
-  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
-  button{background:linear-gradient(180deg,var(--accent),#1f7fe6);color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:800}
-  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cfe8ff}
-  .success{background:#073a12;border:1px solid rgba(0,255,120,0.08);color:#bfffcf;padding:12px;border-radius:10px;margin-top:12px}
-  .error{background:#3b1a1a;border:1px solid rgba(255,80,80,0.08);color:#ffd6d6;padding:12px;border-radius:10px;margin-top:12px}
-  .file-preview{margin-top:8px;color:var(--muted);font-size:13px}
-  .preview-img{max-width:260px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);display:block;margin-top:8px}
-  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-  code{background:rgba(255,255,255,0.02);padding:2px 6px;border-radius:6px;color:#bfe8ff}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test envoi Discord</title>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <img src="/load/logo.png" alt="Logo Dongeons Faillure">
-    <div class="title">
-      <h1>Dongeons Faillure — Candidature & Publicité</h1>
-      <p>Les soumissions sont envoyées directement sur Discord. Remplace la constante <code>WEBHOOK_URL</code> dans le script par ton webhook Discord.</p>
-    </div>
-  </header>
+  <h2>Test envoi Discord</h2>
 
-  <section class="card" aria-labelledby="main-title">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <div style="font-weight:800;color:#dff0ff">Formulaire officiel</div>
-      <div style="color:var(--muted);font-size:13px">Les administrateurs reçoivent tout sur Discord</div>
-    </div>
+  <form id="appForm">
+    <label>Pseudo Discord<br><input id="pseudo" required></label><br>
+    <label>Motivation<br><textarea id="motivation" required></textarea></label><br>
+    <label>Poste<br>
+      <select id="poste">
+        <option value="scripteur">Scripteur</option>
+        <option value="animateur">Animateur</option>
+        <option value="sponsors">Sponsors</option>
+        <option value="dessinateur">Dessinateur</option>
+        <option value="autre">Autre</option>
+      </select>
+    </label><br>
+    <label>Disponibilités<br><input id="dispo"></label><br>
+    <label><input id="agree" type="checkbox"> J'accepte</label><br>
+    <button type="submit">Envoyer candidature</button>
+  </form>
 
-    <div class="tabs" role="tablist" aria-label="Choix du formulaire">
-      <button class="tab active" id="tab-app" role="tab" aria-selected="true">Candidature staff</button>
-      <button class="tab" id="tab-ad" role="tab" aria-selected="false">Proposer une publicité</button>
-    </div>
+  <hr>
 
-    <!-- CANDIDATURE -->
-    <form id="formApp" autocomplete="on" novalidate>
-      <div class="grid">
-        <div class="full">
-          <label for="discordPseudo">Ton pseudo Discord</label>
-          <input id="discordPseudo" name="discordPseudo" type="text" placeholder="@exemple#1234" required />
-          <div class="hint">Ex : @MonPseudo#1234 — indique ton pseudo complet Discord.</div>
-        </div>
-
-        <div class="full">
-          <label for="motivation">Pourquoi veux-tu travailler dans ce jeu</label>
-          <textarea id="motivation" name="motivation" placeholder="Motivation : explique brièvement pourquoi tu veux rejoindre l'équipe" required></textarea>
-        </div>
-
-        <div class="full">
-          <label for="roleSelect">Quel rôle veux-tu avoir</label>
-          <select id="roleSelect" name="roleSelect" required>
-            <option value="">-- Choisir un rôle --</option>
-            <option value="scripteur">Scripteur</option>
-            <option value="animateur">Animateur</option>
-            <option value="sponsors">Sponsors</option>
-            <option value="dessinateur">Dessinateur</option>
-            <option value="autre">Autre</option>
-          </select>
-        </div>
-
-        <div id="otherRoleWrap" class="full" style="display:none">
-          <label for="otherRole">Autre : préciser</label>
-          <input id="otherRole" name="otherRole" type="text" placeholder="Précise le rôle souhaité" />
-        </div>
-
-        <div class="full">
-          <label for="availability">Tes horaires de disponibilité</label>
-          <input id="availability" name="availability" type="text" placeholder="Ex : Lun 18:00-22:00, Sam/Dim toute la journée" />
-        </div>
-
-        <div class="full">
-          <label for="otherInfo">Tu veux parler d'autre chose (optionnel)</label>
-          <textarea id="otherInfo" name="otherInfo" placeholder="Informations supplémentaires (optionnel)"></textarea>
-        </div>
-
-        <div class="full">
-          <label for="agreeApp">Consentement</label>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input id="agreeApp" name="agreeApp" type="checkbox" />
-            <label for="agreeApp" style="margin:0;color:#cfe8ff">J'accepte que les informations soient envoyées sur Discord pour examen.</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button type="submit" id="sendApp">Envoyer</button>
-        <button type="button" id="resetApp" class="ghost">Réinitialiser</button>
-      </div>
-
-      <div id="appMsg" aria-live="polite"></div>
-    </form>
-
-    <!-- PUBLICITÉ -->
-    <form id="formAd" style="display:none;margin-top:12px" enctype="multipart/form-data" novalidate>
-      <div class="grid">
-        <div class="full">
-          <label for="adImage">Image de la publicité</label>
-          <input id="adImage" name="adImage" type="file" accept="image/*" />
-          <div id="adImageInfo" class="file-preview">Aucune image sélectionnée</div>
-        </div>
-
-        <div class="full">
-          <label for="adLink">Lien de la publicité</label>
-          <input id="adLink" name="adLink" type="url" placeholder="https://exemple.com/ma-publicite" />
-        </div>
-
-        <div class="full">
-          <label for="adStudio">Studio / Entreprise de la publicité</label>
-          <input id="adStudio" name="adStudio" type="text" placeholder="Nom du studio ou de l'entreprise" />
-        </div>
-
-        <div class="full">
-          <label for="adContact">Ton pseudo Discord (contact pour la pub)</label>
-          <input id="adContact" name="adContact" type="text" placeholder="@exemple#1234" />
-        </div>
-
-        <div class="full">
-          <label for="adNotes">Notes supplémentaires (optionnel)</label>
-          <textarea id="adNotes" name="adNotes" placeholder="Informations complémentaires (optionnel)"></textarea>
-        </div>
-
-        <div class="full">
-          <label for="agreeAd">Consentement</label>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input id="agreeAd" name="agreeAd" type="checkbox" />
-            <label for="agreeAd" style="margin:0;color:#cfe8ff">J'accepte que les informations soient envoyées sur Discord pour examen.</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button type="submit" id="sendAd">Envoyer</button>
-        <button type="button" id="resetAd" class="ghost">Réinitialiser</button>
-      </div>
-
-      <div id="adMsg" aria-live="polite"></div>
-    </form>
-
-    <div class="hint" style="margin-top:12px">Si l'envoi vers Discord échoue, la soumission est sauvegardée localement (clé <code>df_applications</code>).</div>
-  </section>
-
-  <footer>
-    <div style="color:var(--muted)">Assure-toi de remplacer <code>WEBHOOK_URL</code> dans le script par ton webhook Discord. Si tu veux plus tard centraliser ailleurs, on pourra ajouter un relais serveur.</div>
-  </footer>
-</div>
+  <form id="adForm">
+    <label>Image pub<br><input id="adImage" type="file" accept="image/*"></label><br>
+    <label>Lien pub<br><input id="adLink" type="url"></label><br>
+    <label>Studio<br><input id="adStudio"></label><br>
+    <label>Contact Discord<br><input id="adContact"></label><br>
+    <label><input id="agreeAd" type="checkbox"> J'accepte</label><br>
+    <button type="submit">Envoyer publicité</button>
+  </form>
 
 <script>
-(function(){
-  // === CONFIGURATION ===
-  // Remplace la valeur ci-dessous par ton webhook Discord.
-  // ATTENTION : si tu mets l'URL ici, elle sera visible dans le code client.
-  // Pour plus de sécurité, utilise un relais serveur.
-  const WEBHOOK_URL = 'REPLACE_WITH_YOUR_DISCORD_WEBHOOK_URL';
+/* CONFIG : remplace par ton webhook Discord */
+const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
 
-  // Optionnel : si tu veux utiliser un relais serveur (plus sûr), définis RELAY_URL
-  // const RELAY_URL = 'https://ton-relais.example.com/submit';
-  const RELAY_URL = null;
+/* Envoi texte simple (mode no-cors) */
+async function postTextToWebhook(content) {
+  // mode: 'no-cors' permet d'envoyer la requête même si Discord n'autorise pas CORS.
+  // Attention : la réponse sera opaque et on ne pourra pas détecter les erreurs.
+  await fetch(WEBHOOK_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content })
+  });
+}
 
-  // localStorage key pour fallback
-  const STORAGE_KEY = 'df_applications';
+/* Envoi avec fichier (FormData) */
+async function postFormToWebhook(formData) {
+  await fetch(WEBHOOK_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  });
+}
 
-  // DOM
-  const tabApp = document.getElementById('tab-app');
-  const tabAd = document.getElementById('tab-ad');
-  const formApp = document.getElementById('formApp');
-  const formAd = document.getElementById('formAd');
-  const roleSelect = document.getElementById('roleSelect');
-  const otherRoleWrap = document.getElementById('otherRoleWrap');
-  const adImage = document.getElementById('adImage');
-  const adImageInfo = document.getElementById('adImageInfo');
-  const appMsg = document.getElementById('appMsg');
-  const adMsg = document.getElementById('adMsg');
+/* Handler candidature */
+document.getElementById('appForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pseudo = document.getElementById('pseudo').value.trim();
+  const motivation = document.getElementById('motivation').value.trim();
+  const poste = document.getElementById('poste').value;
+  const dispo = document.getElementById('dispo').value.trim();
+  const agree = document.getElementById('agree').checked;
+  if (!pseudo || !motivation || !agree) {
+    alert('Remplis les champs obligatoires et accepte.');
+    return;
+  }
+  const content = `**Nouvelle candidature**\nPseudo: ${pseudo}\nPoste: ${poste}\nMotivation: ${motivation}\nDisponibilités: ${dispo || '—'}\nEnvoyé: ${new Date().toLocaleString()}`;
+  try {
+    await postTextToWebhook(content);
+    alert('Message envoyé (le navigateur ne confirme pas l\'état à cause de CORS). Vérifie Discord.');
+    e.target.reset();
+  } catch (err) {
+    console.error(err);
+    alert('Erreur locale. Voir console.');
+  }
+});
 
-  let adImageDataUrl = null;
-
-  // Tabs
-  tabApp.addEventListener('click', ()=> setActive('app'));
-  tabAd.addEventListener('click', ()=> setActive('ad'));
-  function setActive(mode){
-    if(mode === 'app'){
-      tabApp.classList.add('active'); tabApp.setAttribute('aria-selected','true');
-      tabAd.classList.remove('active'); tabAd.setAttribute('aria-selected','false');
-      formApp.style.display = ''; formAd.style.display = 'none';
-    } else {
-      tabAd.classList.add('active'); tabAd.setAttribute('aria-selected','true');
-      tabApp.classList.remove('active'); tabApp.setAttribute('aria-selected','false');
-      formAd.style.display = ''; formApp.style.display = 'none';
-    }
+/* Handler publicité (envoie image + payload_json) */
+document.getElementById('adForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fileInput = document.getElementById('adImage');
+  const link = document.getElementById('adLink').value.trim();
+  const studio = document.getElementById('adStudio').value.trim();
+  const contact = document.getElementById('adContact').value.trim();
+  const agreeAd = document.getElementById('agreeAd').checked;
+  if (!fileInput.files[0] || !link || !studio || !agreeAd) {
+    alert('Image, lien, studio et consentement requis.');
+    return;
   }
 
-  // Role "Autre"
-  roleSelect.addEventListener('change', ()=> {
-    otherRoleWrap.style.display = roleSelect.value === 'autre' ? 'block' : 'none';
-  });
+  const form = new FormData();
+  const payload = {
+    content: `**Nouvelle publicité**\nStudio: ${studio}\nLien: ${link}\nContact: ${contact || '—'}\nEnvoyé: ${new Date().toLocaleString()}`
+  };
+  form.append('payload_json', JSON.stringify(payload));
+  form.append('file', fileInput.files[0], fileInput.files[0].name);
 
-  // Image preview for ad
-  adImage.addEventListener('change', async ()=> {
-    const f = adImage.files[0];
-    if(!f){ adImageInfo.textContent = 'Aucune image sélectionnée'; adImageDataUrl = null; return; }
-    if(!f.type.startsWith('image/')){ adImageInfo.textContent = 'Fichier non image'; adImage.value = ''; adImageDataUrl = null; return; }
-    if (f.size > 5 * 1024 * 1024) { // 5MB limit client-side
-      adImageInfo.textContent = 'Image trop volumineuse (max 5 MB)';
-      adImage.value = '';
-      adImageDataUrl = null;
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(ev){
-      adImageDataUrl = ev.target.result;
-      adImageInfo.innerHTML = 'Image sélectionnée : ' + (f.name || 'image') + ' (' + Math.round(f.size/1024) + ' KB') +
-        '<img class="preview-img" src="'+adImageDataUrl+'" alt="aperçu">';
-    };
-    reader.readAsDataURL(f);
-  });
-
-  // Helpers localStorage
-  function loadApplications(){
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return [];
-      return JSON.parse(raw);
-    } catch(e){
-      console.error('Erreur lecture localStorage', e);
-      return [];
-    }
+  try {
+    await postFormToWebhook(form);
+    alert('Publicité envoyée (vérifie Discord).');
+    e.target.reset();
+  } catch (err) {
+    console.error(err);
+    alert('Erreur locale. Voir console.');
   }
-  function saveApplications(arr){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr || []));
-  }
-
-  // Send to Discord via webhook (text message)
-  async function postToDiscordText(content) {
-    if (RELAY_URL) {
-      // send to relay server which will post to Discord (recommended)
-      const r = await fetch(RELAY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content })
-      });
-      if (!r.ok) throw new Error('Relay error ' + r.status);
-      return r;
-    }
-
-    if (!WEBHOOK_URL || WEBHOOK_URL === 'REPLACE_WITH_YOUR_DISCORD_WEBHOOK_URL') {
-      throw new Error('Webhook non configuré');
-    }
-
-    const res = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content })
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error('Discord webhook error: ' + res.status + ' ' + text);
-    }
-    return res;
-  }
-
-  // Send to Discord with file (FormData)
-  async function postToDiscordFile(payload, fileBlob, filename) {
-    if (RELAY_URL) {
-      // send to relay server which will post to Discord (recommended)
-      const form = new FormData();
-      form.append('payload_json', JSON.stringify(payload));
-      if (fileBlob) form.append('file', fileBlob, filename || 'file.png');
-      const r = await fetch(RELAY_URL, { method: 'POST', body: form });
-      if (!r.ok) throw new Error('Relay error ' + r.status);
-      return r;
-    }
-
-    if (!WEBHOOK_URL || WEBHOOK_URL === 'https://discord.com/api/webhooks/1554898994394824825/B7ho8S8BtOFS9so15xiTfcnp0YH3cQhvIl-eaXflsn1X4vF56-WMh4IbzqF-D_hQ3HA0') {
-      throw new Error('Webhook non configuré');
-    }
-
-    const form = new FormData();
-    form.append('payload_json', JSON.stringify(payload));
-    if (fileBlob) form.append('file', fileBlob, filename || 'image.png');
-
-    const res = await fetch(WEBHOOK_URL, { method: 'POST', body: form });
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error('Discord webhook error: ' + res.status + ' ' + text);
-    }
-    return res;
-  }
-
-  // Convert dataURL to Blob
-  async function dataURLToBlob(dataURL) {
-    const res = await fetch(dataURL);
-    return await res.blob();
-  }
-
-  // Form handlers
-  formApp.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    appMsg.innerHTML = '';
-
-    const discordPseudo = document.getElementById('discordPseudo').value.trim();
-    const motivation = document.getElementById('motivation').value.trim();
-    const role = document.getElementById('roleSelect').value;
-    const otherRole = document.getElementById('otherRole').value.trim();
-    const availability = document.getElementById('availability').value.trim();
-    const otherInfo = document.getElementById('otherInfo').value.trim();
-    const agree = document.getElementById('agreeApp').checked;
-
-    if(!discordPseudo){ appMsg.innerHTML = '<div class="error">Indique ton pseudo Discord.</div>'; document.getElementById('discordPseudo').focus(); return; }
-    if(!motivation){ appMsg.innerHTML = '<div class="error">Explique ta motivation.</div>'; document.getElementById('motivation').focus(); return; }
-    if(!role){ appMsg.innerHTML = '<div class="error">Choisis un rôle.</div>'; document.getElementById('roleSelect').focus(); return; }
-    if(role === 'autre' && !otherRole){ appMsg.innerHTML = '<div class="error">Précise le rôle souhaité.</div>'; document.getElementById('otherRole').focus(); return; }
-    if(!agree){ appMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations.</div>'; return; }
-
-    const poste = role === 'autre' ? otherRole : role;
-
-    // Build Discord message
-    const lines = [
-      '**Nouvelle candidature — Dongeons Faillure**',
-      `**Pseudo Discord:** ${discordPseudo}`,
-      `**Poste souhaité:** ${poste}`,
-      `**Motivation:** ${motivation}`,
-      `**Disponibilités:** ${availability || '—'}`,
-      `**Autres:** ${otherInfo || '—'}`,
-      `**Envoyé le:** ${new Date().toLocaleString()}`
-    ];
-    const content = lines.join('\n');
-
-    try {
-      await postToDiscordText(content);
-
-      // Save a local copy as fallback/record
-      const appObj = {
-        type: 'candidature',
-        nom: discordPseudo,
-        poste,
-        motivation,
-        disponibilites: availability,
-        autres: otherInfo,
-        createdAt: new Date().toISOString()
-      };
-      const apps = loadApplications();
-      apps.push(appObj);
-      saveApplications(apps);
-
-      appMsg.innerHTML = '<div class="success">Envoyé sur Discord. Merci pour ta candidature.</div>';
-      formApp.reset();
-      otherRoleWrap.style.display = 'none';
-    } catch (err) {
-      console.error(err);
-      // fallback: save locally
-      const appObj = {
-        type: 'candidature',
-        nom: discordPseudo,
-        poste,
-        motivation,
-        disponibilites: availability,
-        autres: otherInfo,
-        createdAt: new Date().toISOString(),
-        error: String(err)
-      };
-      const apps = loadApplications();
-      apps.push(appObj);
-      saveApplications(apps);
-
-      appMsg.innerHTML = '<div class="error">Envoi vers Discord échoué. La candidature a été sauvegardée localement.</div>';
-    }
-  });
-
-  // Reset candidature
-  document.getElementById('resetApp').addEventListener('click', ()=>{
-    formApp.reset();
-    appMsg.innerHTML = '';
-    otherRoleWrap.style.display = 'none';
-  });
-
-  // Submit publicité
-  formAd.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    adMsg.innerHTML = '';
-
-    const adLink = document.getElementById('adLink').value.trim();
-    const adStudio = document.getElementById('adStudio').value.trim();
-    const adContact = document.getElementById('adContact').value.trim();
-    const adNotes = document.getElementById('adNotes').value.trim();
-    const agreeAd = document.getElementById('agreeAd').checked;
-
-    if(!adImageDataUrl){ adMsg.innerHTML = '<div class="error">Ajoute une image pour la publicité.</div>'; return; }
-    if(!adLink){ adMsg.innerHTML = '<div class="error">Indique le lien de la publicité.</div>'; document.getElementById('adLink').focus(); return; }
-    if(!adStudio){ adMsg.innerHTML = '<div class="error">Indique le studio ou l\'entreprise.</div>'; document.getElementById('adStudio').focus(); return; }
-    if(!agreeAd){ adMsg.innerHTML = '<div class="error">Tu dois accepter l\'utilisation des informations.</div>'; return; }
-
-    const payload = {
-      content: `**Nouvelle publicité — Dongeons Faillure**\n**Studio:** ${adStudio}\n**Lien:** ${adLink}\n**Contact:** ${adContact || '—'}\n**Notes:** ${adNotes || '—'}\n**Envoyé le:** ${new Date().toLocaleString()}`
-    };
-
-    try {
-      // Convert dataURL to Blob and send as file attachment
-      const blob = await dataURLToBlob(adImageDataUrl);
-      await postToDiscordFile(payload, blob, 'pub-image.png');
-
-      // Save local copy
-      const adObj = {
-        type: 'publicite',
-        adStudio,
-        adLink,
-        adContact,
-        adNotes,
-        createdAt: new Date().toISOString()
-      };
-      const apps = loadApplications();
-      apps.push(adObj);
-      saveApplications(apps);
-
-      adMsg.innerHTML = '<div class="success">Publicité envoyée sur Discord. Merci.</div>';
-      formAd.reset();
-      adImageInfo.textContent = 'Aucune image sélectionnée';
-      adImageDataUrl = null;
-    } catch (err) {
-      console.error(err);
-      const adObj = {
-        type: 'publicite',
-        adStudio,
-        adLink,
-        adContact,
-        adNotes,
-        createdAt: new Date().toISOString(),
-        error: String(err)
-      };
-      const apps = loadApplications();
-      apps.push(adObj);
-      saveApplications(apps);
-
-      adMsg.innerHTML = '<div class="error">Envoi vers Discord échoué. La proposition a été sauvegardée localement.</div>';
-    }
-  });
-
-  // Reset ad
-  document.getElementById('resetAd').addEventListener('click', ()=>{
-    formAd.reset();
-    adMsg.innerHTML = '';
-    adImageInfo.textContent = 'Aucune image sélectionnée';
-    adImageDataUrl = null;
-  });
-
-  // Expose helpers for debugging (optional)
-  window.__df_utils = { loadApplications, saveApplications, STORAGE_KEY };
-
-  // initial tab
-  setActive('app');
-})();
+});
 </script>
 </body>
 </html>
